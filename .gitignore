@@ -1,1 +1,6 @@
 out
+.cache
+lib
+inc
+.ignore
+compile_commands.json

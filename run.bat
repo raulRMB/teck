@@ -1,1 +1,1 @@
-cmake -B out && cmake --build out && "out/Debug/jet.exe"
+cmake -B out && cmake --build out && "out/jet.exe"

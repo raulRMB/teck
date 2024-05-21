@@ -1,6 +1,16 @@
 #include <iostream>
+#include <GLFW/glfw3.h>
 
 int main()
 {
-  printf("Hello Jet\n");
+  glfwInit();
+
+  GLFWwindow* window = glfwCreateWindow(400, 400, "jet", nullptr, nullptr);
+
+  while(!glfwWindowShouldClose(window))
+  {
+    glfwPollEvents();
+  }
+
+  glfwTerminate();
 }
