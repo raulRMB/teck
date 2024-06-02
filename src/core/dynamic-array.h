@@ -1,98 +1,87 @@
-#include <vector>
+#ifndef JET_DYNAMIC_ARRAY_H
+#define JET_DYNAMIC_ARRAY_H
+
 #include "def.h"
 
 namespace jet
 {
 
-template <typename T>
-class Iterator
+template <typename T> class DynamicArray
 {
 public:
-  
-  Iterator& operator++()
+  DynamicArray(size_t size = 1) : mSize(size), mCapacity(size), mData(new T[size])
   {
-    ++ptr;
-    return *this;
   }
 
-  T& operator*() const 
+  ~DynamicArray()
   {
-    return *ptr;
+    delete[] mData;
   }
 
-  bool operator != (const Iterator& other) const
+  T &operator[](size_t index)
   {
-    return ptr != other.ptr;
+    return mData[index];
+  }
+
+  const T &operator[](size_t index) const
+  {
+    return mData[index];
+  }
+
+  size_t Size() const
+  {
+    return mSize;
+  }
+
+  void PushBack(const T &value)
+  {
+    if (mSize == mCapacity)
+    {
+      Resize();
+    }
+    mData[mSize++] = value;
+  }
+
+  T *begin()
+  {
+    return mData;
+  }
+
+  T *end()
+  {
+    return mData + mSize;
+  }
+
+  const T *begin() const
+  {
+    return mData;
+  }
+
+  const T *end() const
+  {
+    return mData + mSize;
+  }
+
+  T *Data()
+  {
+    return mData;
   }
 
 private:
-  T* ptr;
+  void Resize()
+  {
+    mCapacity = mCapacity * 2;
+    T *newData = new T[mCapacity];
+    std::copy(mData, mData + mSize, newData);
+    delete[] mData;
+    mData = newData;
+  }
+
+  size_t mSize = 1;
+  size_t mCapacity = 1;
+  T *mData{};
 };
 
-template <typename T>
-class dArray
-{
-public:
-  dArray() {}
-  dArray(u32 size) : vec(size) {}
-  
-  void PushBack(T& obj)
-  {
-    vec.push_back(obj);
-  }
+} // namespace jet
 
-  void PushBack(T&& obj)
-  {
-    vec.push_back(std::move(obj));
-  }
-
-  void PopBack()
-  {
-    vec.pop_back();
-  }
-
-  void Reserve(size_t size)
-  {
-    vec.reserve(size);
-  }
-
-  void Resize(size_t size)
-  {
-    vec.resize(size);
-  }
-
-  void Clear()
-  {
-    vec.clear();
-  }
-
-  T& Back()
-  {
-    return vec.back();
-  }
-
-  size_t Size()
-  {
-    return vec.size();
-  }
-
-  T* Data()
-  {
-    return vec.data();
-  }
-
-  Iterator<T> Begin()
-  {
-    return Iterator(vec.begin());
-  }
-
-  Iterator<T> End()
-  {
-    return Iterator(vec.end());
-  }
-  
-private:
-  std::vector<T> vec;
-};
-  
-}
+#endif // JET_DYNAMIC_ARRAY_H

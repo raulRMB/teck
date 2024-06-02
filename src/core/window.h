@@ -2,24 +2,24 @@
 #define JET_WINDOW_H
 
 #include <GLFW/glfw3.h>
+
 #include <string>
+
 #include "core.h"
 
-namespace jet
-{
+namespace jet {
 
-class Window
-{
+class Window {
   i32 mWidth;
   i32 mHeight;
   std::string mName;
-  
+
   GLFWwindow* pGlfwWindow{};
 
-public:
+ public:
   Window(i32 Width = 800, i32 Height = 600, std::string&& Name = "jet");
 
-private:
+ private:
   friend class Engine;
 
   void Init();
@@ -29,10 +29,10 @@ private:
 
   void Clean();
 
-public:
+ public:
   GLFWwindow* GetGlfwWindow();
 };
-  
-}
 
-#endif //JET_WINDOW_H
+}  // namespace jet
+
+#endif  // JET_WINDOW_H

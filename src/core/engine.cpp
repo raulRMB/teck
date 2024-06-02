@@ -1,49 +1,56 @@
 #include "engine.h"
+
 #include <iostream>
+
+#include "logger.h"
 
 namespace jet
 {
 
-Engine::Engine() :
-  bRunning(false)
-{}
+Engine::Engine() : bRunning(false)
+{
+}
 
 void Engine::Init()
 {
+  CHECK_IN();
+
   mWindow = Window(400, 400, "Jet");
   mWindow.Init();
-  mRenderer.vCreateInstance();  
+  mRenderer.Init();
   bRunning = true;
 }
 
 i32 Engine::Run()
 {
+  CHECK_IN();
+
   Engine engine;
-  
-  try 
+
+  try
   {
     engine.Init();
-  
-    while(engine.bRunning) 
+
+    while (engine.bRunning)
     {
-      engine.PollEvents(); 
+      engine.PollEvents();
       engine.Loop();
-    };  
-  } 
-  catch (const std::exception& e) 
+    };
+  }
+  catch (const std::exception &e)
   {
     std::cerr << e.what() << std::endl;
     return 1;
   }
 
   engine.Clean();
-  
+
   return 0;
 }
 
 void Engine::PollEvents()
 {
-  if(mWindow.ShouldClose())
+  if (mWindow.ShouldClose())
   {
     bRunning = false;
   }
@@ -53,11 +60,14 @@ void Engine::PollEvents()
 
 void Engine::Loop()
 {
-  
 }
 
 void Engine::Clean()
 {
+  CHECK_IN();
+
+  mRenderer.Clean();
+  mWindow.Clean();
 }
 
-}
+} // namespace jet

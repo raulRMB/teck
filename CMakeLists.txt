@@ -2,6 +2,12 @@ cmake_minimum_required(VERSION 3.10)
 
 project(jet)
 
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug)
+endif()
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
+
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 if(EXISTS ${CMAKE_CURRENT_BINARY_DIR}/compile_commands.json)

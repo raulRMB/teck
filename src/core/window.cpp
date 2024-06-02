@@ -1,4 +1,5 @@
 #include "window.h"
+#include "logger.h"
 #include <GLFW/glfw3.h>
 #include <stdexcept>
 
@@ -18,6 +19,8 @@ GLFWwindow* Window::GetGlfwWindow()
 
 void Window::Init()
 {
+  CHECK_IN();
+  
   glfwInit();
 
   glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
@@ -42,6 +45,8 @@ void Window::PollEvents()
 
 void Window::Clean()
 {
+  CHECK_IN();
+
   glfwDestroyWindow(pGlfwWindow);
   glfwTerminate();
 }
