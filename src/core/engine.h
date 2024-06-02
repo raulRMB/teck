@@ -1,8 +1,8 @@
 #ifndef JET_ENGINE_H
 #define JET_ENGINE_H
 
-#include "renderer.h"
 #include "core.h"
+#include "renderer.h"
 #include "window.h"
 
 namespace jet
@@ -14,8 +14,8 @@ class Engine
 
 private:
   Engine();
-  
-private: 
+
+private:
   Renderer mRenderer;
   Window mWindow;
 
@@ -30,7 +30,7 @@ private:
 
   void Clean();
 };
-  
-}
 
-#endif//JET_ENGINE_H
+} // namespace jet
+
+#endif // JET_ENGINE_H

@@ -17,7 +17,7 @@ void Engine::Init()
 
   mWindow = Window(400, 400, "Jet");
   mWindow.Init();
-  mRenderer.Init();
+  mRenderer.Init(&mWindow);
   bRunning = true;
 }
 

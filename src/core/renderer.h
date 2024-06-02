@@ -20,11 +20,19 @@ class Renderer
   vk::Instance mInstance;
   vk::DebugUtilsMessengerEXT mDebugMessenger;
   vk::PhysicalDevice mPhysicalDevice;
+  vk::Device mDevice;
+
+  class Window *mWindow;
+
+  vk::SurfaceKHR mSurface;
+
+  vk::Queue mGraphicsQueue;
+  vk::Queue mPresentQueue;
 
   friend class Engine;
 
 private:
-  void Init();
+  void Init(class Window *window);
 
   void vCreateInstance();
   void vGetExtensions();
@@ -36,6 +44,8 @@ private:
                                                        const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData,
                                                        void *pUserData);
   void vSetupDebugMessenger();
+  void vCreateSurface();
+  void vCreateLogicalDevice();
 
   void Clean();
 };

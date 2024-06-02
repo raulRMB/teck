@@ -10,10 +10,21 @@ namespace jet::RendererUtil
     throw std::runtime_error(msg);                                                                                     \
   }
 
-bool vIsDeviceSuitable(const vk::PhysicalDevice &device);
+struct QueueFamilyIndices
+{
+  std::optional<u32> graphicsFamily;
+  std::optional<u32> presentFamily;
+
+  inline bool isComplete()
+  {
+    return graphicsFamily.has_value() && presentFamily.has_value();
+  }
+};
+
+bool vIsDeviceSuitable(const vk::PhysicalDevice &device, const vk::SurfaceKHR &surface);
 void vPickPhysicalDevice(vk::Instance &instance, vk::PhysicalDevice &physicalDevice);
 i32 vRateDeviceSuitability(const vk::PhysicalDevice &device);
 
-u32 vFindQueueFamilies(const vk::PhysicalDevice &device, const vk::SurfaceKHR &surface);
+QueueFamilyIndices vFindQueueFamilies(const vk::PhysicalDevice &device, const vk::SurfaceKHR &surface);
 
 } // namespace jet::RendererUtil

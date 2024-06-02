@@ -11,17 +11,24 @@
 #include "dynamic-array.h"
 #include "logger.h"
 #include "render-util.h"
+#include "window.h"
+
+#include <set>
 
 namespace jet
 {
 
-void Renderer::Init()
+void Renderer::Init(Window *window)
 {
   CHECK_IN();
 
+  mWindow = window;
+
   vCreateInstance();
   vSetupDebugMessenger();
+  vCreateSurface();
   RendererUtil::vPickPhysicalDevice(mInstance, mPhysicalDevice);
+  vCreateLogicalDevice();
 }
 
 void Renderer::vCreateInstance()
@@ -162,6 +169,17 @@ bool Renderer::vCheckValidationLayerSupport()
   return true;
 }
 
+void Renderer::vCreateSurface()
+{
+  VkSurfaceKHR surface;
+  if (glfwCreateWindowSurface(mInstance, mWindow->GetGlfwWindow(), nullptr, &surface) != VK_SUCCESS)
+  {
+    throw std::runtime_error("Failed to create window surface!");
+  }
+
+  mSurface = surface;
+}
+
 void Renderer::vSetupDebugMessenger()
 {
   if (!mEnableValidationLayers)
@@ -170,7 +188,6 @@ void Renderer::vSetupDebugMessenger()
   vk::DispatchLoaderDynamic dispatchLoader(mInstance, vkGetInstanceProcAddr);
 
   vk::DebugUtilsMessengerCreateInfoEXT createInfo{};
-  createInfo.sType = vk::StructureType::eDebugUtilsMessengerCreateInfoEXT;
   createInfo.messageSeverity = vk::DebugUtilsMessageSeverityFlagBitsEXT::eError |
                                vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning |
                                vk::DebugUtilsMessageSeverityFlagBitsEXT::eVerbose;
@@ -184,11 +201,53 @@ void Renderer::vSetupDebugMessenger()
          "Failed to create Debug Messenger!");
 }
 
+void Renderer::vCreateLogicalDevice()
+{
+  RendererUtil::QueueFamilyIndices indices = RendererUtil::vFindQueueFamilies(mPhysicalDevice, mSurface);
+
+  std::vector<vk::DeviceQueueCreateInfo> queueCreateInfos;
+
+  std::set<u32> uniqueQueueFamilies = {indices.graphicsFamily.value(), indices.presentFamily.value()};
+
+  f32 queuePriority = 1.0f;
+
+  for (u32 queueFamily : uniqueQueueFamilies)
+  {
+    vk::DeviceQueueCreateInfo queueCreateInfo{};
+    queueCreateInfo.queueFamilyIndex = queueFamily;
+    queueCreateInfo.queueCount = 1;
+    queueCreateInfo.pQueuePriorities = &queuePriority;
+    queueCreateInfos.push_back(queueCreateInfo);
+  }
+
+  vk::PhysicalDeviceFeatures deviceFeatures{};
+  vk::DeviceCreateInfo createInfo{};
+  createInfo.queueCreateInfoCount = queueCreateInfos.size();
+  createInfo.pQueueCreateInfos = queueCreateInfos.data();
+
+  createInfo.pEnabledFeatures = &deviceFeatures;
+
+  createInfo.enabledExtensionCount = 0;
+
+  if (mEnableValidationLayers)
+  {
+    createInfo.enabledLayerCount = (u32)mValidationLayers.size();
+    createInfo.ppEnabledLayerNames = mValidationLayers.data();
+  }
+  else
+  {
+    createInfo.enabledLayerCount = 0;
+  }
+
+  VK_TRY(mPhysicalDevice.createDevice(&createInfo, nullptr, &mDevice), "Failed to create logical device!");
+
+  mGraphicsQueue = mDevice.getQueue(indices.graphicsFamily.value(), 0);
+  mPresentQueue = mDevice.getQueue(indices.presentFamily.value(), 0);
+}
+
 void Renderer::Clean()
 {
   CHECK_IN();
-
-  vkDestroyInstance(mInstance, nullptr);
 }
 
 } // namespace jet

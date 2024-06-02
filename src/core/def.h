@@ -10,6 +10,9 @@ using i16 = int8_t;
 using i32 = int32_t;
 using i64 = int64_t;
 
+using f32 = float;
+using f64 = double;
+
 using v1 = glm::vec1;
 using v2 = glm::vec2;
 using v3 = glm::vec3;

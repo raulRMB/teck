@@ -5,10 +5,16 @@
 namespace jet::RendererUtil
 {
 
-bool vIsDeviceSuitable(const vk::PhysicalDevice &device)
+bool vIsDeviceSuitable(const vk::PhysicalDevice &device, const vk::SurfaceKHR &surface)
 {
   vk::PhysicalDeviceProperties deviceProperties = device.getProperties();
   vk::PhysicalDeviceFeatures deviceFeatures = device.getFeatures();
+
+  QueueFamilyIndices indices = vFindQueueFamilies(device, surface);
+  if (!indices.isComplete())
+  {
+    return false;
+  }
 
   return deviceProperties.deviceType == vk::PhysicalDeviceType::eDiscreteGpu && deviceFeatures.geometryShader;
 }
@@ -63,8 +69,10 @@ i32 vRateDeviceSuitability(const vk::PhysicalDevice &device)
   return score;
 }
 
-u32 vFindQueueFamilies(const vk::PhysicalDevice &device, const vk::SurfaceKHR &surface)
+QueueFamilyIndices vFindQueueFamilies(const vk::PhysicalDevice &device, const vk::SurfaceKHR &surface)
 {
+  QueueFamilyIndices indices;
+
   std::vector<vk::QueueFamilyProperties> queueFamilies = device.getQueueFamilyProperties();
 
   u32 i = 0;
@@ -72,13 +80,23 @@ u32 vFindQueueFamilies(const vk::PhysicalDevice &device, const vk::SurfaceKHR &s
   {
     if (queueFamily.queueFlags & vk::QueueFlagBits::eGraphics)
     {
-      return i;
+      indices.graphicsFamily = i;
+    }
+
+    if (device.getSurfaceSupportKHR(i, surface))
+    {
+      indices.presentFamily = i;
+    }
+
+    if (indices.isComplete())
+    {
+      break;
     }
 
     i++;
   }
 
-  throw std::runtime_error("Failed to find a suitable queue family!");
+  return indices;
 }
 
 } // namespace jet::RendererUtil
