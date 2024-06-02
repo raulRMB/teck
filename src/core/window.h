@@ -7,19 +7,21 @@
 
 #include "core.h"
 
-namespace jet {
+namespace jet
+{
 
-class Window {
+class Window
+{
   i32 mWidth;
   i32 mHeight;
   std::string mName;
 
-  GLFWwindow* pGlfwWindow{};
+  GLFWwindow *pGlfwWindow{};
 
- public:
-  Window(i32 Width = 800, i32 Height = 600, std::string&& Name = "jet");
+public:
+  Window(i32 Width = 800, i32 Height = 600, std::string &&Name = "jet");
 
- private:
+private:
   friend class Engine;
 
   void Init();
@@ -29,10 +31,10 @@ class Window {
 
   void Clean();
 
- public:
-  GLFWwindow* GetGlfwWindow();
+public:
+  GLFWwindow *GetGlfwWindow() const;
 };
 
-}  // namespace jet
+} // namespace jet
 
-#endif  // JET_WINDOW_H
+#endif // JET_WINDOW_H

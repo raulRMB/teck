@@ -1,6 +1,7 @@
 #include "renderer.h"
 
 #include <GLFW/glfw3.h>
+#include <stdexcept>
 #include <vulkan/vulkan_core.h>
 
 #include <vulkan/vulkan.hpp>
@@ -18,6 +19,25 @@
 namespace jet
 {
 
+const vk::PhysicalDevice &Renderer::GetPhysicalDevice() const
+{
+  return mPhysicalDevice;
+}
+
+const vk::Device &Renderer::GetDevice() const
+{
+  return mDevice;
+}
+const vk::SurfaceKHR &Renderer::GetSurfaceKHR() const
+{
+  return mSurface;
+}
+
+const Window &Renderer::GetWindow() const
+{
+  return *mWindow;
+}
+
 void Renderer::Init(Window *window)
 {
   CHECK_IN();
@@ -27,8 +47,11 @@ void Renderer::Init(Window *window)
   vCreateInstance();
   vSetupDebugMessenger();
   vCreateSurface();
-  RendererUtil::vPickPhysicalDevice(mInstance, mPhysicalDevice);
+  ru::vPickPhysicalDevice(mInstance, mPhysicalDevice);
   vCreateLogicalDevice();
+  vCreateSwapchain();
+  vCreateImageViews();
+  vCreateGraphicsPipeline();
 }
 
 void Renderer::vCreateInstance()
@@ -203,7 +226,7 @@ void Renderer::vSetupDebugMessenger()
 
 void Renderer::vCreateLogicalDevice()
 {
-  RendererUtil::QueueFamilyIndices indices = RendererUtil::vFindQueueFamilies(mPhysicalDevice, mSurface);
+  ru::QueueFamilyIndices indices = ru::vFindQueueFamilies(mPhysicalDevice, mSurface);
 
   std::vector<vk::DeviceQueueCreateInfo> queueCreateInfos;
 
@@ -227,7 +250,10 @@ void Renderer::vCreateLogicalDevice()
 
   createInfo.pEnabledFeatures = &deviceFeatures;
 
-  createInfo.enabledExtensionCount = 0;
+  const std::vector<const char *> &deviceExtensions = ru::vGetDeviceExtensions();
+
+  createInfo.enabledExtensionCount = (u32)deviceExtensions.size();
+  createInfo.ppEnabledExtensionNames = deviceExtensions.data();
 
   if (mEnableValidationLayers)
   {
@@ -243,6 +269,91 @@ void Renderer::vCreateLogicalDevice()
 
   mGraphicsQueue = mDevice.getQueue(indices.graphicsFamily.value(), 0);
   mPresentQueue = mDevice.getQueue(indices.presentFamily.value(), 0);
+}
+
+void Renderer::vCreateSwapchain()
+{
+  ru::SwapChainSupportDetails swapChainSupport = ru::vQuerySwapChainSupport(*this);
+
+  vk::SurfaceFormatKHR surfaceFormat = ru::vChooseSwapSurfaceFormat(swapChainSupport.formats);
+  vk::PresentModeKHR presentMode = ru::vChooseSwapPresentMode(swapChainSupport.presentModes);
+  vk::Extent2D extent = ru::vChooseSwapExtent(*this, swapChainSupport.capabilities);
+
+  u32 imageCount = swapChainSupport.capabilities.minImageCount + 1;
+
+  if (swapChainSupport.capabilities.maxImageCount > 0 && imageCount > swapChainSupport.capabilities.maxImageCount)
+  {
+    imageCount = swapChainSupport.capabilities.maxImageCount;
+  }
+
+  vk::SwapchainCreateInfoKHR createInfo{};
+  createInfo.surface = mSurface;
+
+  createInfo.minImageCount = imageCount;
+  createInfo.imageFormat = surfaceFormat.format;
+  createInfo.imageColorSpace = surfaceFormat.colorSpace;
+  createInfo.imageExtent = extent;
+  createInfo.imageArrayLayers = 1;
+  createInfo.imageUsage = vk::ImageUsageFlagBits::eColorAttachment;
+
+  ru::QueueFamilyIndices indices = ru::vFindQueueFamilies(mPhysicalDevice, mSurface);
+
+  u32 queueFamilyIndices[] = {indices.graphicsFamily.value(), indices.presentFamily.value()};
+
+  if (indices.graphicsFamily != indices.presentFamily)
+  {
+    createInfo.imageSharingMode = vk::SharingMode::eConcurrent;
+    createInfo.queueFamilyIndexCount = 2;
+    createInfo.pQueueFamilyIndices = queueFamilyIndices;
+  }
+  else
+  {
+    createInfo.imageSharingMode = vk::SharingMode::eExclusive;
+    createInfo.queueFamilyIndexCount = 0;     // Optional
+    createInfo.pQueueFamilyIndices = nullptr; // Optional
+  }
+
+  createInfo.preTransform = swapChainSupport.capabilities.currentTransform;
+  createInfo.compositeAlpha = vk::CompositeAlphaFlagBitsKHR::eOpaque;
+  createInfo.presentMode = presentMode;
+  createInfo.clipped = vk::True;
+  createInfo.oldSwapchain = nullptr;
+
+  mSwapchain = mDevice.createSwapchainKHR(createInfo, nullptr);
+
+  if (mSwapchain == nullptr)
+  {
+    throw std::runtime_error("failed to create swapchain");
+  }
+
+  mSwapchainImages = mDevice.getSwapchainImagesKHR(mSwapchain);
+}
+
+void Renderer::vCreateImageViews()
+{
+  mSwapchainImageViews.resize(mSwapchainImages.size());
+
+  for (size_t i = 0; i < mSwapchainImages.size(); i++)
+  {
+    vk::ImageViewCreateInfo createInfo{};
+    createInfo.image = mSwapchainImages[i];
+    createInfo.viewType = vk::ImageViewType::e2D;
+    createInfo.format = mSwapchainImageFormat;
+    createInfo.components.r = vk::ComponentSwizzle::eIdentity;
+    createInfo.components.g = vk::ComponentSwizzle::eIdentity;
+    createInfo.components.b = vk::ComponentSwizzle::eIdentity;
+    createInfo.components.a = vk::ComponentSwizzle::eIdentity;
+    createInfo.subresourceRange.aspectMask = vk::ImageAspectFlagBits::eColor;
+    createInfo.subresourceRange.baseMipLevel = 0;
+    createInfo.subresourceRange.levelCount = 1;
+    createInfo.subresourceRange.baseArrayLayer = 0;
+    createInfo.subresourceRange.layerCount = 1;
+    mSwapchainImageViews[i] = mDevice.createImageView(createInfo, nullptr);
+  }
+}
+
+void Renderer::vCreateGraphicsPipeline()
+{
 }
 
 void Renderer::Clean()

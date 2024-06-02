@@ -5,29 +5,27 @@
 
 namespace jet
 {
-  
-Window::Window(i32 Width, i32 Height, std::string&& Name) :
-  mWidth(Width),
-  mHeight(Height),
-  mName(std::move(Name))
-{}
 
-GLFWwindow* Window::GetGlfwWindow()
+Window::Window(i32 Width, i32 Height, std::string &&Name) : mWidth(Width), mHeight(Height), mName(std::move(Name))
 {
-  return pGlfwWindow; 
+}
+
+GLFWwindow *Window::GetGlfwWindow() const
+{
+  return pGlfwWindow;
 }
 
 void Window::Init()
 {
   CHECK_IN();
-  
+
   glfwInit();
 
   glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
   glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
   pGlfwWindow = glfwCreateWindow(mWidth, mHeight, mName.c_str(), nullptr, nullptr);
 
-  if(!pGlfwWindow)
+  if (!pGlfwWindow)
   {
     throw std::runtime_error("Failed to create GLFWwindow");
   }
@@ -40,7 +38,7 @@ bool Window::ShouldClose()
 
 void Window::PollEvents()
 {
-  glfwPollEvents();  
+  glfwPollEvents();
 }
 
 void Window::Clean()
@@ -51,4 +49,4 @@ void Window::Clean()
   glfwTerminate();
 }
 
-}
+} // namespace jet

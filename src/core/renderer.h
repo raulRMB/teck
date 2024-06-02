@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <vulkan/vulkan.hpp>
+#include <vulkan/vulkan_handles.hpp>
 
 namespace jet
 {
@@ -21,15 +22,25 @@ class Renderer
   vk::DebugUtilsMessengerEXT mDebugMessenger;
   vk::PhysicalDevice mPhysicalDevice;
   vk::Device mDevice;
+  vk::Queue mGraphicsQueue;
+  vk::Queue mPresentQueue;
+  vk::SurfaceKHR mSurface;
+  vk::SwapchainKHR mSwapchain;
+  std::vector<vk::Image> mSwapchainImages;
+  std::vector<vk::ImageView> mSwapchainImageViews;
+  vk::Format mSwapchainImageFormat;
+  vk::Extent2D mSwapchainExtent;
+  vk::Pipeline mGraphicsPipeline;
 
   class Window *mWindow;
 
-  vk::SurfaceKHR mSurface;
-
-  vk::Queue mGraphicsQueue;
-  vk::Queue mPresentQueue;
-
   friend class Engine;
+
+public:
+  const vk::PhysicalDevice &GetPhysicalDevice() const;
+  const vk::Device &GetDevice() const;
+  const vk::SurfaceKHR &GetSurfaceKHR() const;
+  const Window &GetWindow() const;
 
 private:
   void Init(class Window *window);
@@ -43,9 +54,13 @@ private:
                                                        VkDebugUtilsMessageTypeFlagsEXT messageType,
                                                        const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData,
                                                        void *pUserData);
+
   void vSetupDebugMessenger();
   void vCreateSurface();
   void vCreateLogicalDevice();
+  void vCreateSwapchain();
+  void vCreateImageViews();
+  void vCreateGraphicsPipeline();
 
   void Clean();
 };
