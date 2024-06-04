@@ -1,11 +1,14 @@
 #include "render-util.h"
 #include "logger.h"
+#include "reader.h"
 #include "renderer.h"
 #include "window.h"
 #include <map>
 #include <set>
 #include <stdexcept>
+#include <vector>
 #include <vulkan/vulkan_enums.hpp>
+#include <vulkan/vulkan_handles.hpp>
 
 namespace jet::ru
 {
@@ -18,7 +21,7 @@ SwapChainSupportDetails vQuerySwapChainSupport(const Renderer &renderer)
   SwapChainSupportDetails details;
 
   details.capabilities = device.getSurfaceCapabilitiesKHR(surface);
-  details.formats = device.getSurfaceFormatsKHR();
+  details.formats = device.getSurfaceFormatsKHR(surface);
   details.presentModes = device.getSurfacePresentModesKHR(surface);
 
   return details;
@@ -201,6 +204,24 @@ vk::Extent2D vChooseSwapExtent(const Renderer &renderer, const vk::SurfaceCapabi
 
     return actualExtent;
   }
+}
+
+vk::ShaderModule CreateShaderModule(const vk::Device &device, const std::string &shaderName)
+{
+  std::vector<char> code = Reader::ReadShader(shaderName);
+
+  vk::ShaderModuleCreateInfo createInfo{};
+  createInfo.setCodeSize(code.size());
+  createInfo.setPCode(reinterpret_cast<const u32 *>(code.data()));
+
+  vk::ShaderModule module = device.createShaderModule(createInfo);
+
+  if (!module)
+  {
+    throw std::runtime_error("Failed to create shader module: " + shaderName);
+  }
+
+  return module;
 }
 
 } // namespace jet::ru

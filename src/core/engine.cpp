@@ -34,6 +34,7 @@ i32 Engine::Run()
     while (engine.bRunning)
     {
       engine.PollEvents();
+      engine.mRenderer.DrawFrame();
       engine.Loop();
     };
   }

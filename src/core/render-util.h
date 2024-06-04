@@ -50,4 +50,6 @@ vk::SurfaceFormatKHR vChooseSwapSurfaceFormat(const std::vector<vk::SurfaceForma
 vk::PresentModeKHR vChooseSwapPresentMode(const std::vector<vk::PresentModeKHR> &availablePresentModes);
 vk::Extent2D vChooseSwapExtent(const Renderer &renderer, const vk::SurfaceCapabilitiesKHR &capabilities);
 
+vk::ShaderModule CreateShaderModule(const vk::Device &device, const std::string &shaderName);
+
 } // namespace jet::ru

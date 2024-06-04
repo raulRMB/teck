@@ -1,6 +1,7 @@
 #ifndef JET_RENDERER_H
 #define JET_RENDERER_H
 
+#include "def.h"
 #include <vector>
 #include <vulkan/vulkan.hpp>
 #include <vulkan/vulkan_handles.hpp>
@@ -31,6 +32,15 @@ class Renderer
   vk::Format mSwapchainImageFormat;
   vk::Extent2D mSwapchainExtent;
   vk::Pipeline mGraphicsPipeline;
+  vk::PipelineLayout mPipelineLayout;
+  vk::RenderPass mRenderPass;
+  vk::CommandPool mCommandPool;
+  vk::CommandBuffer mCommandBuffer;
+  vk::Semaphore mImageAvailableSemaphore;
+  vk::Semaphore mRenderFinishedSemaphore;
+  vk::Fence mInFlightFence;
+
+  std::vector<vk::Framebuffer> mSwapChainFrameBuffers;
 
   class Window *mWindow;
 
@@ -60,7 +70,16 @@ private:
   void vCreateLogicalDevice();
   void vCreateSwapchain();
   void vCreateImageViews();
+  void vCreateRenderPass();
   void vCreateGraphicsPipeline();
+  void vCreateFrameBuffers();
+  void vCreateCommandPool();
+  void vCreateCommandBuffer();
+  void vCreateSyncObjects();
+
+  void vRecordCommandBuffer(const vk::CommandBuffer &CommandBuffer, u32 imageIndex);
+
+  void DrawFrame();
 
   void Clean();
 };

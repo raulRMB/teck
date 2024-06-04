@@ -2,6 +2,7 @@
 
 #include <GLFW/glfw3.h>
 #include <stdexcept>
+#include <vector>
 #include <vulkan/vulkan_core.h>
 
 #include <vulkan/vulkan.hpp>
@@ -15,6 +16,7 @@
 #include "window.h"
 
 #include <set>
+#include <vulkan/vulkan_structs.hpp>
 
 namespace jet
 {
@@ -51,7 +53,12 @@ void Renderer::Init(Window *window)
   vCreateLogicalDevice();
   vCreateSwapchain();
   vCreateImageViews();
+  vCreateRenderPass();
   vCreateGraphicsPipeline();
+  vCreateFrameBuffers();
+  vCreateCommandPool();
+  vCreateCommandBuffer();
+  vCreateSyncObjects();
 }
 
 void Renderer::vCreateInstance()
@@ -289,6 +296,9 @@ void Renderer::vCreateSwapchain()
   vk::SwapchainCreateInfoKHR createInfo{};
   createInfo.surface = mSurface;
 
+  mSwapchainImageFormat = surfaceFormat.format;
+  mSwapchainExtent = extent;
+
   createInfo.minImageCount = imageCount;
   createInfo.imageFormat = surfaceFormat.format;
   createInfo.imageColorSpace = surfaceFormat.colorSpace;
@@ -319,7 +329,7 @@ void Renderer::vCreateSwapchain()
   createInfo.clipped = vk::True;
   createInfo.oldSwapchain = nullptr;
 
-  mSwapchain = mDevice.createSwapchainKHR(createInfo, nullptr);
+  mSwapchain = mDevice.createSwapchainKHR(createInfo);
 
   if (mSwapchain == nullptr)
   {
@@ -335,7 +345,7 @@ void Renderer::vCreateImageViews()
 
   for (size_t i = 0; i < mSwapchainImages.size(); i++)
   {
-    vk::ImageViewCreateInfo createInfo{};
+    vk::ImageViewCreateInfo createInfo;
     createInfo.image = mSwapchainImages[i];
     createInfo.viewType = vk::ImageViewType::e2D;
     createInfo.format = mSwapchainImageFormat;
@@ -348,12 +358,278 @@ void Renderer::vCreateImageViews()
     createInfo.subresourceRange.levelCount = 1;
     createInfo.subresourceRange.baseArrayLayer = 0;
     createInfo.subresourceRange.layerCount = 1;
-    mSwapchainImageViews[i] = mDevice.createImageView(createInfo, nullptr);
+    mSwapchainImageViews[i] = mDevice.createImageView(createInfo);
   }
 }
 
 void Renderer::vCreateGraphicsPipeline()
 {
+  vk::ShaderModule vertModule = ru::CreateShaderModule(mDevice, "vert");
+  vk::ShaderModule fragModule = ru::CreateShaderModule(mDevice, "frag");
+
+  vk::PipelineShaderStageCreateInfo vertShaderStageInfo{};
+  vertShaderStageInfo.setStage(vk::ShaderStageFlagBits::eVertex);
+  vertShaderStageInfo.setModule(vertModule);
+  vertShaderStageInfo.setPName("main");
+
+  vk::PipelineShaderStageCreateInfo fragShaderStageInfo{};
+  fragShaderStageInfo.setStage(vk::ShaderStageFlagBits::eFragment);
+  fragShaderStageInfo.setModule(fragModule);
+  fragShaderStageInfo.setPName("main");
+
+  vk::PipelineShaderStageCreateInfo shaderStages[] = {
+      vertShaderStageInfo,
+      fragShaderStageInfo,
+  };
+
+  vk::PipelineVertexInputStateCreateInfo vertexInputInfo{};
+  vertexInputInfo.setVertexBindingDescriptions(nullptr);
+  vertexInputInfo.setVertexAttributeDescriptions(nullptr);
+
+  vk::PipelineInputAssemblyStateCreateInfo inputAssembly{};
+  inputAssembly.setTopology(vk::PrimitiveTopology::eTriangleList);
+  inputAssembly.setPrimitiveRestartEnable(vk::False);
+
+  vk::Viewport viewport{};
+  viewport.setX(0.0f);
+  viewport.setY(0.0f);
+  viewport.setWidth((f32)mSwapchainExtent.width);
+  viewport.setHeight((f32)mSwapchainExtent.height);
+  viewport.setMinDepth(0.0f);
+  viewport.setMaxDepth(1.0f);
+
+  vk::Rect2D scissor{};
+  scissor.setOffset({0, 0});
+  scissor.setExtent(mSwapchainExtent);
+
+  std::vector<vk::DynamicState> dynamicStates = {
+      vk::DynamicState::eViewport,
+      vk::DynamicState::eScissor,
+  };
+
+  vk::PipelineDynamicStateCreateInfo dynamicState{};
+  dynamicState.setDynamicStates(dynamicStates);
+
+  vk::PipelineViewportStateCreateInfo viewportState{};
+  viewportState.setViewports(viewport);
+  viewportState.setScissors(scissor);
+
+  vk::PipelineRasterizationStateCreateInfo rasterizer;
+  rasterizer.setDepthClampEnable(vk::False);
+  rasterizer.setRasterizerDiscardEnable(vk::False);
+  rasterizer.setPolygonMode(vk::PolygonMode::eFill);
+  rasterizer.setLineWidth(1.0f);
+  rasterizer.setCullMode(vk::CullModeFlagBits::eBack);
+  rasterizer.setFrontFace(vk::FrontFace::eClockwise);
+
+  rasterizer.setDepthBiasEnable(vk::False);
+  rasterizer.setDepthBiasConstantFactor(0.0f);
+  rasterizer.setDepthBiasClamp(0.0f);
+  rasterizer.setDepthBiasSlopeFactor(0.0f);
+
+  vk::PipelineMultisampleStateCreateInfo multisampling{};
+  multisampling.setSampleShadingEnable(vk::False);
+  multisampling.setRasterizationSamples(vk::SampleCountFlagBits::e1);
+  multisampling.setMinSampleShading(1.0f);
+  multisampling.setPSampleMask(nullptr);
+  multisampling.setAlphaToCoverageEnable(vk::False);
+  multisampling.setAlphaToOneEnable(vk::False);
+
+  vk::PipelineColorBlendAttachmentState colorBlendAttachment{};
+  colorBlendAttachment.setColorWriteMask(vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG |
+                                         vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA);
+  colorBlendAttachment.setBlendEnable(vk::False);
+  colorBlendAttachment.setSrcColorBlendFactor(vk::BlendFactor::eOne);
+  colorBlendAttachment.setDstAlphaBlendFactor(vk::BlendFactor::eZero);
+  /*colorBlendAttachment.setBlendEnable(vk::True);*/
+  /*colorBlendAttachment.setSrcColorBlendFactor(vk::BlendFactor::eSrcAlpha);*/
+  /*colorBlendAttachment.setDstAlphaBlendFactor(vk::BlendFactor::eOneMinusSrcAlpha);*/
+  colorBlendAttachment.setColorBlendOp(vk::BlendOp::eAdd);
+  colorBlendAttachment.setSrcAlphaBlendFactor(vk::BlendFactor::eOne);
+  colorBlendAttachment.setDstAlphaBlendFactor(vk::BlendFactor::eZero);
+  colorBlendAttachment.setAlphaBlendOp(vk::BlendOp::eAdd);
+
+  vk::PipelineColorBlendStateCreateInfo colorBlending{};
+  colorBlending.setLogicOpEnable(vk::False);
+  colorBlending.setLogicOp(vk::LogicOp::eCopy);
+  colorBlending.setAttachments(colorBlendAttachment);
+  colorBlending.setBlendConstants({0.f, 0.f, 0.f, 0.f});
+
+  vk::PipelineLayoutCreateInfo pipelineLayoutInfo{};
+  pipelineLayoutInfo.setSetLayouts(nullptr);
+  pipelineLayoutInfo.setPushConstantRanges(nullptr);
+
+  mPipelineLayout = mDevice.createPipelineLayout(pipelineLayoutInfo);
+  if (!mPipelineLayout)
+  {
+    throw std::runtime_error("Failed to create pipeline layout");
+  }
+
+  vk::GraphicsPipelineCreateInfo pipelineInfo;
+  pipelineInfo.setStages(shaderStages)
+      .setPVertexInputState(&vertexInputInfo)
+      .setPInputAssemblyState(&inputAssembly)
+      .setPViewportState(&viewportState)
+      .setPMultisampleState(&multisampling)
+      .setPDepthStencilState(nullptr)
+      .setPColorBlendState(&colorBlending)
+      .setPDynamicState(&dynamicState)
+      .setLayout(mPipelineLayout)
+      .setRenderPass(mRenderPass)
+      .setSubpass(0)
+      .setBasePipelineHandle(VK_NULL_HANDLE)
+      .setBasePipelineIndex(-1);
+
+  auto result = mDevice.createGraphicsPipeline({}, pipelineInfo);
+
+  if (result.result != vk::Result::eSuccess)
+  {
+    throw std::runtime_error("Failed to create graphics pipelines!");
+  }
+  mGraphicsPipeline = result.value;
+
+  mDevice.destroyShaderModule(vertModule);
+  mDevice.destroyShaderModule(fragModule);
+}
+
+void Renderer::vCreateRenderPass()
+{
+  vk::AttachmentDescription colorAttachment{};
+  colorAttachment.setFormat(mSwapchainImageFormat);
+  colorAttachment.setSamples(vk::SampleCountFlagBits::e1);
+  colorAttachment.setLoadOp(vk::AttachmentLoadOp::eClear);
+  colorAttachment.setStoreOp(vk::AttachmentStoreOp::eStore);
+  colorAttachment.setStencilLoadOp(vk::AttachmentLoadOp::eDontCare);
+  colorAttachment.setStencilStoreOp(vk::AttachmentStoreOp::eDontCare);
+  colorAttachment.setInitialLayout(vk::ImageLayout::eUndefined);
+  colorAttachment.setFinalLayout(vk::ImageLayout::ePresentSrcKHR);
+
+  vk::AttachmentReference colorAttachmentRef{};
+  colorAttachmentRef.setLayout(vk::ImageLayout::eColorAttachmentOptimal);
+
+  vk::SubpassDescription subpass{};
+  subpass.setColorAttachments(colorAttachmentRef);
+
+  vk::RenderPassCreateInfo renderPassInfo{};
+  renderPassInfo.setAttachments(colorAttachment);
+  renderPassInfo.setSubpasses(subpass);
+
+  vk::SubpassDependency dependency;
+  dependency.setSrcSubpass(VK_SUBPASS_EXTERNAL)
+      .setDstSubpass(0)
+      .setSrcStageMask(vk::PipelineStageFlagBits::eColorAttachmentOutput)
+      .setSrcAccessMask(vk::AccessFlags(0))
+      .setDstStageMask(vk::PipelineStageFlagBits::eColorAttachmentOutput)
+      .setDstAccessMask(vk::AccessFlagBits::eColorAttachmentWrite);
+
+  renderPassInfo.setDependencies(dependency);
+
+  mRenderPass = mDevice.createRenderPass(renderPassInfo);
+}
+
+void Renderer::vCreateFrameBuffers()
+{
+  mSwapChainFrameBuffers.resize(mSwapchainImageViews.size());
+
+  for (size_t i = 0; i < mSwapchainImageViews.size(); i++)
+  {
+    VkImageView attachments[] = {mSwapchainImageViews[i]};
+
+    VkFramebufferCreateInfo framebufferInfo{};
+    framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+    framebufferInfo.renderPass = mRenderPass;
+    framebufferInfo.attachmentCount = 1;
+    framebufferInfo.pAttachments = attachments;
+    framebufferInfo.width = mSwapchainExtent.width;
+    framebufferInfo.height = mSwapchainExtent.height;
+    framebufferInfo.layers = 1;
+
+    mSwapChainFrameBuffers[i] = mDevice.createFramebuffer(framebufferInfo);
+  }
+}
+
+void Renderer::vCreateCommandPool()
+{
+  ru::QueueFamilyIndices queueFamilyIndices = ru::vFindQueueFamilies(mPhysicalDevice, mSurface);
+
+  vk::CommandPoolCreateInfo poolInfo;
+  poolInfo.setFlags(vk::CommandPoolCreateFlagBits::eResetCommandBuffer)
+      .setQueueFamilyIndex(queueFamilyIndices.graphicsFamily.value());
+
+  mCommandPool = mDevice.createCommandPool(poolInfo);
+}
+
+void Renderer::vCreateCommandBuffer()
+{
+  vk::CommandBufferAllocateInfo allocInfo;
+  allocInfo.setCommandPool(mCommandPool).setLevel(vk::CommandBufferLevel::ePrimary).setCommandBufferCount(1);
+  mCommandBuffer = mDevice.allocateCommandBuffers(allocInfo).back();
+}
+
+void Renderer::vRecordCommandBuffer(const vk::CommandBuffer &commandBuffer, u32 imageIndex)
+{
+  vk::CommandBufferBeginInfo beginInfo;
+
+  commandBuffer.begin(beginInfo);
+
+  vk::RenderPassBeginInfo renderPassInfo;
+  renderPassInfo.setRenderPass(mRenderPass)
+      .setFramebuffer(mSwapChainFrameBuffers[imageIndex])
+      .setRenderArea(vk::Rect2D({0, 0}, mSwapchainExtent));
+
+  vk::ClearValue clearColor({0.f, 0.f, 0.f, 1.f});
+  renderPassInfo.setClearValues(clearColor);
+
+  commandBuffer.beginRenderPass(renderPassInfo, vk::SubpassContents::eInline);
+  commandBuffer.bindPipeline(vk::PipelineBindPoint::eGraphics, mGraphicsPipeline);
+  commandBuffer.setViewport(0, vk::Viewport()
+                                   .setX(0.f)
+                                   .setY(0.f)
+                                   .setWidth((f32)mSwapchainExtent.width)
+                                   .setHeight((f32)mSwapchainExtent.height)
+                                   .setMinDepth(0.f)
+                                   .setMaxDepth(1.f));
+  commandBuffer.setScissor(0, vk::Rect2D().setOffset({0, 0}).setExtent(mSwapchainExtent));
+  commandBuffer.draw(3, 1, 0, 0);
+  commandBuffer.endRenderPass();
+  commandBuffer.end();
+}
+
+void Renderer::vCreateSyncObjects()
+{
+  vk::SemaphoreCreateInfo semaphoreInfo;
+  vk::FenceCreateInfo fenceCreateInfo;
+  fenceCreateInfo.setFlags(vk::FenceCreateFlagBits::eSignaled);
+  mImageAvailableSemaphore = mDevice.createSemaphore(semaphoreInfo);
+  mRenderFinishedSemaphore = mDevice.createSemaphore(semaphoreInfo);
+  mInFlightFence = mDevice.createFence(fenceCreateInfo);
+}
+
+void Renderer::DrawFrame()
+{
+  vk::Result result = mDevice.waitForFences(mInFlightFence, vk::True, UINT64_MAX);
+  mDevice.resetFences(mInFlightFence);
+
+  u32 imageIndex = mDevice.acquireNextImageKHR(mSwapchain, UINT64_MAX, mImageAvailableSemaphore).value;
+
+  mCommandBuffer.reset();
+
+  vRecordCommandBuffer(mCommandBuffer, imageIndex);
+
+  vk::SubmitInfo submitInfo;
+  vk::PipelineStageFlags waitStages[]{vk::PipelineStageFlagBits::eColorAttachmentOutput};
+  submitInfo.setWaitSemaphores(mImageAvailableSemaphore)
+      .setWaitDstStageMask(waitStages)
+      .setCommandBuffers(mCommandBuffer)
+      .setSignalSemaphores(mRenderFinishedSemaphore);
+
+  mGraphicsQueue.submit(submitInfo);
+
+  vk::PresentInfoKHR presentInfo;
+  presentInfo.setWaitSemaphores(mRenderFinishedSemaphore);
+  presentInfo.setSwapchains(mSwapchain).setImageIndices(imageIndex);
+
+  result = mPresentQueue.presentKHR(presentInfo);
 }
 
 void Renderer::Clean()
