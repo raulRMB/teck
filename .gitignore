@@ -4,3 +4,5 @@ lib
 inc
 .ignore
 compile_commands.json
+cmake-build-*/
+.idea

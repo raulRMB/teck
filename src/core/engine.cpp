@@ -31,12 +31,13 @@ i32 Engine::Run()
   {
     engine.Init();
 
-    while (engine.bRunning)
+    do
     {
+      Logger::Info("{}", (bool)engine.bRunning);
       engine.PollEvents();
       engine.mRenderer.DrawFrame();
       engine.Loop();
-    };
+    } while (engine.bRunning);
   }
   catch (const std::exception &e)
   {

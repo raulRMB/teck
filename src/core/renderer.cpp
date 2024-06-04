@@ -57,7 +57,7 @@ void Renderer::Init(Window *window)
   vCreateGraphicsPipeline();
   vCreateFrameBuffers();
   vCreateCommandPool();
-  vCreateCommandBuffer();
+  vCreateCommandBuffers();
   vCreateSyncObjects();
 }
 
@@ -560,11 +560,14 @@ void Renderer::vCreateCommandPool()
   mCommandPool = mDevice.createCommandPool(poolInfo);
 }
 
-void Renderer::vCreateCommandBuffer()
+void Renderer::vCreateCommandBuffers()
 {
+  mCommandBuffers.resize(MAX_FRAMES_IN_FLIGHT);
   vk::CommandBufferAllocateInfo allocInfo;
-  allocInfo.setCommandPool(mCommandPool).setLevel(vk::CommandBufferLevel::ePrimary).setCommandBufferCount(1);
-  mCommandBuffer = mDevice.allocateCommandBuffers(allocInfo).back();
+  allocInfo.setCommandPool(mCommandPool)
+      .setLevel(vk::CommandBufferLevel::ePrimary)
+      .setCommandBufferCount((u32)mCommandBuffers.size());
+  mCommandBuffers = mDevice.allocateCommandBuffers(allocInfo);
 }
 
 void Renderer::vRecordCommandBuffer(const vk::CommandBuffer &commandBuffer, u32 imageIndex)
@@ -598,39 +601,47 @@ void Renderer::vRecordCommandBuffer(const vk::CommandBuffer &commandBuffer, u32 
 
 void Renderer::vCreateSyncObjects()
 {
+  mImageAvailableSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
+  mRenderFinishedSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
+
   vk::SemaphoreCreateInfo semaphoreInfo;
   vk::FenceCreateInfo fenceCreateInfo;
   fenceCreateInfo.setFlags(vk::FenceCreateFlagBits::eSignaled);
-  mImageAvailableSemaphore = mDevice.createSemaphore(semaphoreInfo);
-  mRenderFinishedSemaphore = mDevice.createSemaphore(semaphoreInfo);
-  mInFlightFence = mDevice.createFence(fenceCreateInfo);
+  for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
+  {
+    mImageAvailableSemaphores[i] = mDevice.createSemaphore(semaphoreInfo);
+    mRenderFinishedSemaphores[i] = mDevice.createSemaphore(semaphoreInfo);
+    mInFlightFences[i] = mDevice.createFence(fenceCreateInfo);
+  }
 }
 
 void Renderer::DrawFrame()
 {
-  vk::Result result = mDevice.waitForFences(mInFlightFence, vk::True, UINT64_MAX);
-  mDevice.resetFences(mInFlightFence);
+  vk::Result result = mDevice.waitForFences(mInFlightFences[mCurrentFrame], vk::True, UINT64_MAX);
+  mDevice.resetFences(mInFlightFences[mCurrentFrame]);
 
-  u32 imageIndex = mDevice.acquireNextImageKHR(mSwapchain, UINT64_MAX, mImageAvailableSemaphore).value;
+  u32 imageIndex = mDevice.acquireNextImageKHR(mSwapchain, UINT64_MAX, mImageAvailableSemaphores[mCurrentFrame]).value;
 
-  mCommandBuffer.reset();
+  mCommandBuffers[mCurrentFrame].reset(vk::CommandBufferResetFlags(0));
 
-  vRecordCommandBuffer(mCommandBuffer, imageIndex);
+  vRecordCommandBuffer(mCommandBuffers[mCurrentFrame], imageIndex);
 
   vk::SubmitInfo submitInfo;
   vk::PipelineStageFlags waitStages[]{vk::PipelineStageFlagBits::eColorAttachmentOutput};
-  submitInfo.setWaitSemaphores(mImageAvailableSemaphore)
+  submitInfo.setWaitSemaphores(mImageAvailableSemaphores[mCurrentFrame])
       .setWaitDstStageMask(waitStages)
-      .setCommandBuffers(mCommandBuffer)
-      .setSignalSemaphores(mRenderFinishedSemaphore);
+      .setCommandBuffers(mCommandBuffers[mCurrentFrame])
+      .setSignalSemaphores(mRenderFinishedSemaphores[mCurrentFrame]);
 
   mGraphicsQueue.submit(submitInfo);
 
   vk::PresentInfoKHR presentInfo;
-  presentInfo.setWaitSemaphores(mRenderFinishedSemaphore);
+  presentInfo.setWaitSemaphores(mRenderFinishedSemaphores[mCurrentFrame]);
   presentInfo.setSwapchains(mSwapchain).setImageIndices(imageIndex);
 
   result = mPresentQueue.presentKHR(presentInfo);
+
+  mCurrentFrame = (mCurrentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 }
 
 void Renderer::Clean()

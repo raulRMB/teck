@@ -13,6 +13,8 @@ class Renderer
 {
   const std::vector<const char *> mValidationLayers = {"VK_LAYER_KHRONOS_validation"};
 
+  const int MAX_FRAMES_IN_FLIGHT = 2;
+
 #ifdef NDEBUG
   static constexpr bool mEnableValidationLayers = false;
 #else
@@ -35,14 +37,17 @@ class Renderer
   vk::PipelineLayout mPipelineLayout;
   vk::RenderPass mRenderPass;
   vk::CommandPool mCommandPool;
-  vk::CommandBuffer mCommandBuffer;
-  vk::Semaphore mImageAvailableSemaphore;
-  vk::Semaphore mRenderFinishedSemaphore;
-  vk::Fence mInFlightFence;
+
+  std::vector<vk::CommandBuffer> mCommandBuffers;
+  std::vector<vk::Semaphore> mImageAvailableSemaphores;
+  std::vector<vk::Semaphore> mRenderFinishedSemaphores;
+  std::vector<vk::Fence> mInFlightFences;
 
   std::vector<vk::Framebuffer> mSwapChainFrameBuffers;
 
   class Window *mWindow;
+
+  u32 mCurrentFrame = 0;
 
   friend class Engine;
 
@@ -74,7 +79,7 @@ private:
   void vCreateGraphicsPipeline();
   void vCreateFrameBuffers();
   void vCreateCommandPool();
-  void vCreateCommandBuffer();
+  void vCreateCommandBuffers();
   void vCreateSyncObjects();
 
   void vRecordCommandBuffer(const vk::CommandBuffer &CommandBuffer, u32 imageIndex);
