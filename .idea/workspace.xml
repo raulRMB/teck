@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakePresetLoader"><![CDATA[{
+  "useNewFormat": true
+}]]></component>
+  <component name="CMakeReloadState">
+    <option name="reloaded" value="true" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="jet" targetName="docs" />
+      <config projectName="jet" targetName="jet" />
+      <config projectName="jet" targetName="update_mappings" />
+      <config projectName="jet" targetName="uninstall" />
+      <config projectName="jet" targetName="glfw" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+      <configuration PROFILE_NAME="Release" ENABLED="true" CONFIG_NAME="Release" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6f8e4a4a-3125-46db-b9ed-226f65c7a80b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jet.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cache-v2-39e92a69c542a2ea9ea5.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-d036c5e054c911cf544e.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-6c5eccd28a0faf44618b.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/directory-.-Debug-f5ebdc15457944623624.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/directory-_deps.glfw-build-Debug-870878081d00d52fd2d8.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/directory-_deps.glfw-build.docs-Debug-48baa103560068bf60d1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/directory-_deps.glfw-build.src-Debug-241f6bb7b8e83cf66219.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/directory-_deps.glm-build-Debug-3ab0f2b8ca6d44de8bbe.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/directory-_deps.glm-build.glm-Debug-afa33c3e425f714e5927.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2024-06-04T19-02-46-0648.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-docs-Debug-183829917c8074c463c5.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-glfw-Debug-4037c270369cf547b50b.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-jet-Debug-befca2b0f54d8c8b8494.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-uninstall-Debug-1e3e9b10b9fadba9f15a.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-update_mappings-Debug-a2f63e468a44a87eb5d7.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/toolchains-v1-c52453eea45024a8f428.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeDoxyfile.in" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeDoxygenDefaults.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeConfigureLog.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeConfigureLog.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cmake.check_cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/jet.dir/src/core/engine.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/jet.dir/src/core/reader.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/jet.dir/src/core/render-util.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/jet.dir/src/core/renderer.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/jet.dir/src/core/window.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/jet.dir/src/main.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/rules.ninja" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CPM_modules/Findglfw.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/CMakeFiles/Export/58b37b387a34f8a6c7ff51065ade4e63/glfw3Targets-debug.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/CMakeFiles/Export/58b37b387a34f8a6c7ff51065ade4e63/glfw3Targets.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/cmake_install.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/cmake_uninstall.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/docs/Doxyfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/docs/cmake_install.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/context.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/egl_context.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/glx_context.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/init.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/input.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/linux_joystick.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/monitor.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/null_init.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/null_joystick.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/null_monitor.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/null_window.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/osmesa_context.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/platform.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/posix_module.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/posix_poll.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/posix_thread.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/posix_time.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/vulkan.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/window.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/wl_init.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/wl_monitor.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/wl_window.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/x11_init.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/x11_monitor.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/x11_window.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/CMakeFiles/glfw.dir/xkb_unicode.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/cmake_install.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/fractional-scale-v1-client-protocol-code.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/fractional-scale-v1-client-protocol.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/glfw3.pc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/glfw3Config.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/glfw3ConfigVersion.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/idle-inhibit-unstable-v1-client-protocol-code.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/idle-inhibit-unstable-v1-client-protocol.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/libglfw3.a" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/pointer-constraints-unstable-v1-client-protocol-code.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/pointer-constraints-unstable-v1-client-protocol.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/relative-pointer-unstable-v1-client-protocol-code.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/relative-pointer-unstable-v1-client-protocol.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/viewporter-client-protocol-code.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/viewporter-client-protocol.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/wayland-client-protocol-code.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/wayland-client-protocol.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/xdg-activation-v1-client-protocol-code.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/xdg-activation-v1-client-protocol.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/xdg-decoration-unstable-v1-client-protocol-code.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/xdg-decoration-unstable-v1-client-protocol.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/xdg-shell-client-protocol-code.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-build/src/xdg-shell-client-protocol.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-src" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/.ninja_log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/CMakeCache.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/CMakeFiles/3.27.0/CMakeSystem.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/CMakeFiles/CMakeConfigureLog.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/CMakeFiles/TargetDirectories.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/CMakeFiles/cmake.check_cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/CMakeFiles/glfw-populate-complete" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/CMakeFiles/glfw-populate.dir/Labels.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/CMakeFiles/glfw-populate.dir/Labels.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/CMakeFiles/rules.ninja" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/build.ninja" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/cmake_install.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-configure" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-done" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-download" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-gitclone-lastrun.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-gitinfo.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-install" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-mkdir" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-patch-info.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-test" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-update-info.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/glfw-populate-prefix/tmp/glfw-populate-cfgcmd.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/glfw-populate-prefix/tmp/glfw-populate-gitclone.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/glfw-populate-prefix/tmp/glfw-populate-gitupdate.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glfw-subbuild/glfw-populate-prefix/tmp/glfw-populate-mkdirs.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glm-build/CTestTestfile.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glm-build/cmake_install.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glm-build/glm/CTestTestfile.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glm-build/glm/cmake_install.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glm-subbuild/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/_deps/glm-subbuild/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glm-subbuild/CMakeFiles/glm-populate-complete" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glm-subbuild/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/_deps/glm-subbuild/build.ninja" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-configure" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-done" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-download" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-gitclone-lastrun.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-install" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-test" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/jet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/.cmake/api/v1/reply/cache-v2-ef19b3fca97dc486653d.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/.cmake/api/v1/reply/cmakeFiles-v1-203dee12a5a71ff96fce.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/.cmake/api/v1/reply/codemodel-v2-e4623902d88ad4f86e76.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/.cmake/api/v1/reply/directory-.-Release-f5ebdc15457944623624.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/.cmake/api/v1/reply/directory-_deps.glfw-build-Release-a11c4c6fbdbcedc419fb.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/.cmake/api/v1/reply/directory-_deps.glfw-build.docs-Release-c7208a3f8bb08fa80f12.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/.cmake/api/v1/reply/directory-_deps.glfw-build.src-Release-ec3102d040716c844e4f.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/.cmake/api/v1/reply/directory-_deps.glm-build-Release-bef8c484ce7e113239b7.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/.cmake/api/v1/reply/directory-_deps.glm-build.glm-Release-fac2a094d2a05c0eb965.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/.cmake/api/v1/reply/index-2024-06-04T19-02-50-0866.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/.cmake/api/v1/reply/target-docs-Release-3d831d30eaf302d8298f.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/.cmake/api/v1/reply/target-glfw-Release-c4bd213f533703f73846.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/.cmake/api/v1/reply/target-jet-Release-b92cb1cc753429bd714d.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/.cmake/api/v1/reply/target-uninstall-Release-3868d9d26e21788dae60.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/.cmake/api/v1/reply/target-update_mappings-Release-8f5a8ab085339f1145a8.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/.cmake/api/v1/reply/toolchains-v1-c52453eea45024a8f428.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/.ninja_deps" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/.ninja_log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeCache.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeDoxyfile.in" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeDoxygenDefaults.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/CMakeConfigureLog.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/CMakeConfigureLog.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/TargetDirectories.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/clion-Release-log.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/cmake.check_cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/jet.dir/src/core/engine.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/jet.dir/src/core/reader.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/jet.dir/src/core/render-util.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/jet.dir/src/core/renderer.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/jet.dir/src/core/window.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/jet.dir/src/main.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/rules.ninja" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CPM_modules/Findglfw.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/Testing/Temporary/LastTest.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/CMakeFiles/Export/58b37b387a34f8a6c7ff51065ade4e63/glfw3Targets-release.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/CMakeFiles/Export/58b37b387a34f8a6c7ff51065ade4e63/glfw3Targets.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/cmake_install.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/cmake_uninstall.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/docs/Doxyfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/docs/cmake_install.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/context.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/egl_context.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/glx_context.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/init.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/input.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/linux_joystick.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/monitor.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/null_init.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/null_joystick.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/null_monitor.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/null_window.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/osmesa_context.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/platform.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/posix_module.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/posix_poll.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/posix_thread.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/posix_time.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/vulkan.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/window.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/wl_init.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/wl_monitor.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/wl_window.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/x11_init.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/x11_monitor.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/x11_window.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/CMakeFiles/glfw.dir/xkb_unicode.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/cmake_install.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/fractional-scale-v1-client-protocol-code.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/fractional-scale-v1-client-protocol.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/glfw3.pc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/glfw3Config.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/glfw3ConfigVersion.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/idle-inhibit-unstable-v1-client-protocol-code.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/idle-inhibit-unstable-v1-client-protocol.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/libglfw3.a" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/pointer-constraints-unstable-v1-client-protocol-code.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/pointer-constraints-unstable-v1-client-protocol.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/relative-pointer-unstable-v1-client-protocol-code.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/relative-pointer-unstable-v1-client-protocol.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/viewporter-client-protocol-code.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/viewporter-client-protocol.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/wayland-client-protocol-code.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/wayland-client-protocol.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/xdg-activation-v1-client-protocol-code.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/xdg-activation-v1-client-protocol.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/xdg-decoration-unstable-v1-client-protocol-code.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/xdg-decoration-unstable-v1-client-protocol.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/xdg-shell-client-protocol-code.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-build/src/xdg-shell-client-protocol.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-src" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/.ninja_log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/CMakeCache.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/CMakeFiles/3.27.0/CMakeSystem.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/CMakeFiles/CMakeConfigureLog.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/CMakeFiles/TargetDirectories.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/CMakeFiles/cmake.check_cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/CMakeFiles/glfw-populate-complete" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/CMakeFiles/glfw-populate.dir/Labels.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/CMakeFiles/glfw-populate.dir/Labels.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/CMakeFiles/rules.ninja" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/build.ninja" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/cmake_install.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-configure" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-done" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-download" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-gitclone-lastrun.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-gitinfo.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-install" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-mkdir" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-patch-info.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-test" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-update-info.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/glfw-populate-prefix/tmp/glfw-populate-cfgcmd.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/glfw-populate-prefix/tmp/glfw-populate-gitclone.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/glfw-populate-prefix/tmp/glfw-populate-gitupdate.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glfw-subbuild/glfw-populate-prefix/tmp/glfw-populate-mkdirs.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glm-build/CTestTestfile.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glm-build/cmake_install.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glm-build/glm/CTestTestfile.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glm-build/glm/cmake_install.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glm-subbuild/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/_deps/glm-subbuild/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glm-subbuild/CMakeFiles/glm-populate-complete" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-configure" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-done" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-download" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-gitclone-lastrun.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-install" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/_deps/glm-subbuild/glm-populate-prefix/src/glm-populate-stamp/glm-populate-test" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/build.ninja" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/cmake_install.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/jet" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/renderer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/renderer.cpp" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Release" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2023" />
+    <option name="minorVersion" value="3.1" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="2hQUn3jFSwkzXRRxFnsy1YIDcky" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "CMake Application.jet.executor": "Run",
+    "CMake Debug.jet.executor": "Debug",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.advertisement.text.overridden": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/raul/dev/jet",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "CMakeSettings",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="CMake Application.jet">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="jet" type="CMakeListConfigurationType" factoryName="CMakeListConfigurationFactory" temporary="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="docs" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="jet" TARGET_NAME="docs" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="glfw" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="jet" TARGET_NAME="glfw" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="jet" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="jet" TARGET_NAME="jet" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="jet" RUN_TARGET_NAME="jet">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="uninstall" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="jet" TARGET_NAME="uninstall" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="update_mappings" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="jet" TARGET_NAME="update_mappings" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.jet" />
+      <item itemvalue="CMake Application.uninstall" />
+      <item itemvalue="CMake Application.docs" />
+      <item itemvalue="CMake Application.glfw" />
+      <item itemvalue="CMake Application.update_mappings" />
+      <item itemvalue="CMake Debug.jet" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="CMake Debug.jet" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6f8e4a4a-3125-46db-b9ed-226f65c7a80b" name="Changes" comment="" />
+      <created>1717525957437</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1717525957437</updated>
+      <workItem from="1717525958586" duration="2105000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VCPKGProject">
+    <isAutomaticCheckingOnLaunch value="false" />
+    <isAutomaticFoundErrors value="true" />
+    <isAutomaticReloadCMake value="true" />
+  </component>
+</project>
