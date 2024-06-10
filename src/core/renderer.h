@@ -53,6 +53,8 @@ namespace jet
 
 		vk::Buffer mVertexBuffer;
 		vk::DeviceMemory mVertexBufferMemory;
+		vk::Buffer mIndexBuffer;
+		vk::DeviceMemory mIndexBufferMemory;
 
 	public:
 		const vk::PhysicalDevice& GetPhysicalDevice() const;
@@ -83,6 +85,7 @@ namespace jet
 		void vCreateFrameBuffers();
 		void vCreateCommandPool();
 		void vCreateVertexBuffer();
+		void vCreateIndexBuffer();
 		void vCreateCommandBuffers();
 		void vCreateSyncObjects();
 

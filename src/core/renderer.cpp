@@ -60,6 +60,7 @@ namespace jet
 		vCreateFrameBuffers();
 		vCreateCommandPool();
 		vCreateVertexBuffer();
+		vCreateIndexBuffer();
 		vCreateCommandBuffers();
 		vCreateSyncObjects();
 	}
@@ -229,8 +230,7 @@ namespace jet
 			vk::DebugUtilsMessageTypeFlagBitsEXT::ePerformance;
 		createInfo.pfnUserCallback = vDebugCallback;
 
-		vk::DebugUtilsMessengerEXT debugMessenger;
-		VK_TRY(mInstance.createDebugUtilsMessengerEXT(&createInfo, nullptr, &debugMessenger, dispatchLoader),
+		VK_TRY(mInstance.createDebugUtilsMessengerEXT(&createInfo, nullptr, &mDebugMessenger, dispatchLoader),
 			"Failed to create Debug Messenger!");
 	}
 
@@ -582,6 +582,26 @@ namespace jet
 		mDevice.freeMemory(stagingBufferMemory);
 	}
 
+	void Renderer::vCreateIndexBuffer()
+	{
+		vk::DeviceSize bufferSize = sizeof(Indices[0]) * Indices.size();
+
+		vk::Buffer stagingBuffer;
+		vk::DeviceMemory stagingBufferMemory;
+		ru::vCreateBuffer(mDevice, mPhysicalDevice, bufferSize, vk::BufferUsageFlagBits::eTransferSrc, vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent, stagingBuffer, stagingBufferMemory);
+
+		void* data;
+		mDevice.mapMemory(stagingBufferMemory, 0, bufferSize, vk::MemoryMapFlags(0), &data);
+		memcpy(data, Indices.data(), bufferSize);
+		mDevice.unmapMemory(stagingBufferMemory);
+
+		ru::vCreateBuffer(mDevice, mPhysicalDevice, bufferSize, vk::BufferUsageFlagBits::eTransferDst | vk::BufferUsageFlagBits::eIndexBuffer, vk::MemoryPropertyFlagBits::eDeviceLocal, mIndexBuffer, mIndexBufferMemory);
+		ru::vCopyBuffer(mDevice, mCommandPool, mGraphicsQueue, stagingBuffer, mIndexBuffer, bufferSize);
+
+		mDevice.destroyBuffer(stagingBuffer);
+		mDevice.freeMemory(stagingBufferMemory);
+	}
+
 	void Renderer::vCreateCommandBuffers()
 	{
 		mCommandBuffers.resize(MAX_FRAMES_IN_FLIGHT);
@@ -621,8 +641,9 @@ namespace jet
 		vk::DeviceSize offsets[] = { 0 };
 
 		commandBuffer.bindVertexBuffers(0, 1, buffers, offsets);
+		commandBuffer.bindIndexBuffer(mIndexBuffer, 0, vk::IndexType::eUint16);
 
-		commandBuffer.draw(static_cast<u32>(Vertices.size()), 1, 0, 0);
+		commandBuffer.drawIndexed(static_cast<u32>(Indices.size()), 1, 0, 0, 0);
 		commandBuffer.endRenderPass();
 		commandBuffer.end();
 	}
@@ -740,6 +761,17 @@ namespace jet
 
 		mDevice.waitIdle();
 
+		vCleanupSwapchain();
+		mDevice.destroyPipeline(mGraphicsPipeline);
+		mDevice.destroyPipelineLayout(mPipelineLayout);
+		mDevice.destroyRenderPass(mRenderPass);
+
+		mDevice.destroyBuffer(mIndexBuffer);
+		mDevice.freeMemory(mIndexBufferMemory);
+
+		mDevice.destroyBuffer(mVertexBuffer);
+		mDevice.freeMemory(mVertexBufferMemory);
+
 		for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
 		{
 			mDevice.destroySemaphore(mRenderFinishedSemaphores[i]);
@@ -747,12 +779,17 @@ namespace jet
 			mDevice.destroyFence(mInFlightFences[i]);
 		}
 
-		mDevice.destroyPipeline(mGraphicsPipeline);
-		for (size_t i = 0; i < mSwapChainFrameBuffers.size(); i++)
-		{
-			mDevice.destroyFramebuffer(mSwapChainFrameBuffers[i]);
-		}
 		mDevice.destroyCommandPool(mCommandPool);
+		mDevice.destroy();
+
+		if (mEnableValidationLayers)
+		{
+			vk::DispatchLoaderDynamic dispatchLoader(mInstance, vkGetInstanceProcAddr);
+			mInstance.destroyDebugUtilsMessengerEXT(mDebugMessenger, nullptr, dispatchLoader);
+		}
+
+		mInstance.destroySurfaceKHR(mSurface);
+		mInstance.destroy();
 	}
 
 } // namespace jet
