@@ -18,6 +18,8 @@
 #include <set>
 #include <vulkan/vulkan_structs.hpp>
 
+#include "primitives/vertex.h"
+
 namespace jet
 {
 
@@ -57,6 +59,7 @@ namespace jet
 		vCreateGraphicsPipeline();
 		vCreateFrameBuffers();
 		vCreateCommandPool();
+		vCreateVertexBuffer();
 		vCreateCommandBuffers();
 		vCreateSyncObjects();
 	}
@@ -378,8 +381,12 @@ namespace jet
 		};
 
 		vk::PipelineVertexInputStateCreateInfo vertexInputInfo{};
-		vertexInputInfo.setVertexBindingDescriptions(nullptr);
-		vertexInputInfo.setVertexAttributeDescriptions(nullptr);
+
+		auto bindingDescription = Vertex::getBindingDescription();
+		auto attributeDescriptions = Vertex::getAttributeDescriptions();
+
+		vertexInputInfo.setVertexBindingDescriptions(bindingDescription);
+		vertexInputInfo.setVertexAttributeDescriptions(attributeDescriptions);
 
 		vk::PipelineInputAssemblyStateCreateInfo inputAssembly{};
 		inputAssembly.setTopology(vk::PrimitiveTopology::eTriangleList);
@@ -555,6 +562,26 @@ namespace jet
 		mCommandPool = mDevice.createCommandPool(poolInfo);
 	}
 
+	void Renderer::vCreateVertexBuffer()
+	{
+		vk::DeviceSize bufferSize = sizeof(Vertices[0]) * Vertices.size();
+
+		vk::Buffer stagingBuffer;
+		vk::DeviceMemory stagingBufferMemory;
+		ru::vCreateBuffer(mDevice, mPhysicalDevice, bufferSize, vk::BufferUsageFlagBits::eTransferSrc, vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent, stagingBuffer, stagingBufferMemory);
+
+		void* data;
+		mDevice.mapMemory(stagingBufferMemory, 0, bufferSize, vk::MemoryMapFlags(0), &data);
+		memcpy(data, Vertices.data(), bufferSize);
+		mDevice.unmapMemory(stagingBufferMemory);
+
+		ru::vCreateBuffer(mDevice, mPhysicalDevice, bufferSize, vk::BufferUsageFlagBits::eTransferDst | vk::BufferUsageFlagBits::eVertexBuffer, vk::MemoryPropertyFlagBits::eDeviceLocal, mVertexBuffer, mVertexBufferMemory);
+		ru::vCopyBuffer(mDevice, mCommandPool, mGraphicsQueue, stagingBuffer, mVertexBuffer, bufferSize);
+
+		mDevice.destroyBuffer(stagingBuffer);
+		mDevice.freeMemory(stagingBufferMemory);
+	}
+
 	void Renderer::vCreateCommandBuffers()
 	{
 		mCommandBuffers.resize(MAX_FRAMES_IN_FLIGHT);
@@ -589,7 +616,13 @@ namespace jet
 			.setMinDepth(0.f)
 			.setMaxDepth(1.f));
 		commandBuffer.setScissor(0, vk::Rect2D().setOffset({ 0, 0 }).setExtent(mSwapchainExtent));
-		commandBuffer.draw(3, 1, 0, 0);
+
+		vk::Buffer buffers[] = { mVertexBuffer };
+		vk::DeviceSize offsets[] = { 0 };
+
+		commandBuffer.bindVertexBuffers(0, 1, buffers, offsets);
+
+		commandBuffer.draw(static_cast<u32>(Vertices.size()), 1, 0, 0);
 		commandBuffer.endRenderPass();
 		commandBuffer.end();
 	}

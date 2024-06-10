@@ -224,4 +224,70 @@ namespace jet::ru
 		return module;
 	}
 
+	void vCreateBuffer(const vk::Device& device, const vk::PhysicalDevice& physicalDevice, vk::DeviceSize size, vk::BufferUsageFlags usage, vk::MemoryPropertyFlags properties, vk::Buffer& buffer, vk::DeviceMemory& bufferMemory)
+	{
+		vk::BufferCreateInfo bufferInfo{};
+		bufferInfo.setSize(size);
+		bufferInfo.setUsage(usage);
+		bufferInfo.setSharingMode(vk::SharingMode::eExclusive);
+
+		buffer = device.createBuffer(bufferInfo);
+
+		vk::MemoryRequirements memRequirements = device.getBufferMemoryRequirements(buffer);
+
+		vk::MemoryAllocateInfo allocInfo{};
+		allocInfo.setAllocationSize(memRequirements.size);
+		allocInfo.setMemoryTypeIndex(vFindMemoryType(physicalDevice, memRequirements.memoryTypeBits, properties));
+
+		bufferMemory = device.allocateMemory(allocInfo);
+		device.bindBufferMemory(buffer, bufferMemory, 0);
+	}
+
+	void vCopyBuffer(const vk::Device& device, const vk::CommandPool& commandPool, const vk::Queue& graphicsQueue, const vk::Buffer& srcBuffer, const vk::Buffer& dstBuffer, vk::DeviceSize size)
+	{
+		vk::CommandBufferAllocateInfo allocateInfo{};
+		allocateInfo.setLevel(vk::CommandBufferLevel::ePrimary);
+		allocateInfo.setCommandPool(commandPool);
+		allocateInfo.setCommandBufferCount(1);
+
+		vk::CommandBuffer commandBuffer = device.allocateCommandBuffers(allocateInfo)[0];
+
+		vk::CommandBufferBeginInfo beginInfo{};
+		beginInfo.setFlags(vk::CommandBufferUsageFlagBits::eOneTimeSubmit);
+
+		commandBuffer.begin(beginInfo);
+
+		vk::BufferCopy copyRegion{};
+		copyRegion.setSrcOffset(0).setDstOffset(0).setSize(size);
+		commandBuffer.copyBuffer(srcBuffer, dstBuffer, copyRegion);
+
+		commandBuffer.end();
+
+		vk::SubmitInfo submitInfo{};
+		submitInfo.setCommandBufferCount(1);
+		submitInfo.setPCommandBuffers(&commandBuffer);
+
+		graphicsQueue.submit(submitInfo, nullptr);
+		graphicsQueue.waitIdle();
+
+		device.freeCommandBuffers(commandPool, commandBuffer);
+	}
+
+	u32 vFindMemoryType(const vk::PhysicalDevice& physicalDevice, u32 typeFilter, vk::MemoryPropertyFlags properties)
+	{
+		vk::PhysicalDeviceMemoryProperties memProperties = physicalDevice.getMemoryProperties();
+
+		for (u32 i = 0; i < memProperties.memoryTypeCount; i++)
+		{
+			if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags & properties) == properties)
+			{
+				return i;
+			}
+		}
+
+		return 0;
+	}
+
+
+
 } // namespace jet::ru
