@@ -18,6 +18,8 @@ class Window
 
   GLFWwindow *pGlfwWindow{};
 
+  u8 mFramebufferResized : 1;
+
 public:
   Window(i32 Width = 800, i32 Height = 600, std::string &&Name = "jet");
 
@@ -29,10 +31,16 @@ private:
   bool ShouldClose();
   void PollEvents();
 
+  void SetGLFWCallbacks();
+
+  static void FramebufferResizeCallback(GLFWwindow *window, i32 width, i32 height);
+
   void Clean();
 
 public:
   GLFWwindow *GetGlfwWindow() const;
+  void SetFramebufferResized(bool value);
+  bool GetFramebufferResized() const;
 };
 
 } // namespace jet

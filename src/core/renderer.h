@@ -81,6 +81,8 @@ private:
   void vCreateCommandPool();
   void vCreateCommandBuffers();
   void vCreateSyncObjects();
+  void vRecreateSwapchain();
+  void vCleanupSwapchain();
 
   void vRecordCommandBuffer(const vk::CommandBuffer &CommandBuffer, u32 imageIndex);
 

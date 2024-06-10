@@ -7,69 +7,68 @@
 namespace jet
 {
 
-Engine::Engine() : bRunning(false)
-{
-}
+	Engine::Engine() : bRunning(false)
+	{
+	}
 
-void Engine::Init()
-{
-  CHECK_IN();
+	void Engine::Init()
+	{
+		CHECK_IN();
 
-  mWindow = Window(400, 400, "Jet");
-  mWindow.Init();
-  mRenderer.Init(&mWindow);
-  bRunning = true;
-}
+		mWindow = Window(400, 400, "Jet");
+		mWindow.Init();
+		mRenderer.Init(&mWindow);
+		bRunning = true;
+	}
 
-i32 Engine::Run()
-{
-  CHECK_IN();
+	i32 Engine::Run()
+	{
+		CHECK_IN();
 
-  Engine engine;
+		Engine engine;
 
-  try
-  {
-    engine.Init();
+		try
+		{
+			engine.Init();
 
-    do
-    {
-      Logger::Info("{}", (bool)engine.bRunning);
-      engine.PollEvents();
-      engine.mRenderer.DrawFrame();
-      engine.Loop();
-    } while (engine.bRunning);
-  }
-  catch (const std::exception &e)
-  {
-    std::cerr << e.what() << std::endl;
-    return 1;
-  }
+			do
+			{
+				engine.PollEvents();
+				engine.mRenderer.DrawFrame();
+				engine.Loop();
+			} while (engine.bRunning);
+		}
+		catch (const std::exception& e)
+		{
+			std::cerr << e.what() << std::endl;
+			return 1;
+		}
 
-  engine.Clean();
+		engine.Clean();
 
-  return 0;
-}
+		return 0;
+	}
 
-void Engine::PollEvents()
-{
-  if (mWindow.ShouldClose())
-  {
-    bRunning = false;
-  }
+	void Engine::PollEvents()
+	{
+		if (mWindow.ShouldClose())
+		{
+			bRunning = false;
+		}
 
-  mWindow.PollEvents();
-}
+		mWindow.PollEvents();
+	}
 
-void Engine::Loop()
-{
-}
+	void Engine::Loop()
+	{
+	}
 
-void Engine::Clean()
-{
-  CHECK_IN();
+	void Engine::Clean()
+	{
+		CHECK_IN();
 
-  mRenderer.Clean();
-  mWindow.Clean();
-}
+		mRenderer.Clean();
+		mWindow.Clean();
+	}
 
 } // namespace jet

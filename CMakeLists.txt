@@ -13,7 +13,6 @@ include (${CMAKE_CURRENT_BINARY_DIR}/cmake/CPM.cmake)
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
 endif()
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -30,12 +29,6 @@ file(GLOB_RECURSE SRC src/*.cpp)
 
 add_executable(${PROJECT_NAME} ${SRC})
 
-#find_package(glfw3 REQUIRED)
-find_package(Vulkan REQUIRED)
-#find_package(glm REQUIRED)
-
-target_link_libraries(${PROJECT_NAME} glfw Vulkan::Vulkan glm)
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/core/)
 
 CPMAddPackage(
         NAME glm
@@ -49,5 +42,5 @@ CPMAddPackage(
         GIT_TAG 3.4
 )
 
-# target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/inc" "C:/VulkanSDK/1.3.236.0/Include")
-# target_link_libraries(${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/lib/glfw/glfw3dll.lib" "C:/VulkanSDK/1.3.236.0/Lib/vulkan-1.lib")
+target_include_directories(${PROJECT_NAME} PUBLIC C:/VulkanSDK/1.3.283.0/Include ${CMAKE_CURRENT_SOURCE_DIR}/core/)
+target_link_libraries(${PROJECT_NAME} glm glfw C:/VulkanSDK/1.3.283.0/Lib/vulkan-1.lib)
