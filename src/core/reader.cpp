@@ -6,7 +6,11 @@ namespace jet
 
 std::vector<char> Reader::ReadShader(const std::string &filename)
 {
+    #ifdef _WIN32
+  std::string shaderAddress = "../rec/shaders/" + filename + ".spv";
+    #else
   std::string shaderAddress = "rec/shaders/" + filename + ".spv";
+    #endif
   std::ifstream file(shaderAddress, std::ios::ate | std::ios::binary);
 
   if (!file.is_open())

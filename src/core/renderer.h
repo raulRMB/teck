@@ -8,6 +8,12 @@
 
 namespace jet
 {
+	struct UniformBufferObject
+	{
+		m4 model;
+		m4 view;
+		m4 proj;
+	};
 
 	class Renderer
 	{
@@ -34,6 +40,7 @@ namespace jet
 		vk::Format mSwapchainImageFormat;
 		vk::Extent2D mSwapchainExtent;
 		vk::Pipeline mGraphicsPipeline;
+		vk::DescriptorSetLayout mDescriptorSetLayout;
 		vk::PipelineLayout mPipelineLayout;
 		vk::RenderPass mRenderPass;
 		vk::CommandPool mCommandPool;
@@ -55,6 +62,13 @@ namespace jet
 		vk::DeviceMemory mVertexBufferMemory;
 		vk::Buffer mIndexBuffer;
 		vk::DeviceMemory mIndexBufferMemory;
+
+		std::vector<vk::Buffer> mUniformBuffers;
+		std::vector<vk::DeviceMemory> mUniformBuffersMemory;
+		std::vector<void*> mUniformBuffersMapped;
+
+		vk::DescriptorPool mDescriptorPool;
+		std::vector<vk::DescriptorSet> mDescriptorSets;
 
 	public:
 		const vk::PhysicalDevice& GetPhysicalDevice() const;
@@ -81,11 +95,15 @@ namespace jet
 		void vCreateSwapchain();
 		void vCreateImageViews();
 		void vCreateRenderPass();
+		void vCreateDescriptorSetLayout();
 		void vCreateGraphicsPipeline();
 		void vCreateFrameBuffers();
 		void vCreateCommandPool();
 		void vCreateVertexBuffer();
 		void vCreateIndexBuffer();
+		void vCreateUniformBuffers();
+		void vCreateDescriptorPool();
+		void vCreateDescriptorSets();
 		void vCreateCommandBuffers();
 		void vCreateSyncObjects();
 
@@ -93,6 +111,7 @@ namespace jet
 		void vCleanupSwapchain();
 
 		void vRecordCommandBuffer(const vk::CommandBuffer& CommandBuffer, u32 imageIndex);
+		void vUpdateUniformBuffer(u32 currentImage);
 
 		void DrawFrame();
 

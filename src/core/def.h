@@ -22,10 +22,16 @@ using m2x2 = glm::mat2x2;
 using m2x3 = glm::mat2x3;
 using m2x4 = glm::mat2x4;
 
+using m2 = glm::mat2;
+
 using m3x2 = glm::mat3x2;
 using m3x3 = glm::mat3x3;
 using m3x4 = glm::mat3x4;
 
+using m3 = glm::mat3;
+
 using m4x2 = glm::mat4x2;
 using m4x3 = glm::mat4x3;
 using m4x4 = glm::mat4x4;
+
+using m4 = glm::mat4;
