@@ -29,18 +29,30 @@ file(GLOB_RECURSE SRC src/*.cpp)
 
 add_executable(${PROJECT_NAME} ${SRC})
 
+if(DEFINED _WIN32)
+  CPMAddPackage(
+          NAME glm
+          GITHUB_REPOSITORY g-truc/glm
+          GIT_TAG 0.9.9.7
+  )
 
-CPMAddPackage(
-        NAME glm
-        GITHUB_REPOSITORY g-truc/glm
-        GIT_TAG 0.9.9.7
-)
+  CPMAddPackage(
+          NAME glfw
+          GITHUB_REPOSITORY glfw/glfw
+          GIT_TAG 3.4
+  )
 
-CPMAddPackage(
-        NAME glfw
-        GITHUB_REPOSITORY glfw/glfw
-        GIT_TAG 3.4
-)
+  target_include_directories(${PROJECT_NAME} PUBLIC C:/VulkanSDK/1.3.283.0/Include ${CMAKE_CURRENT_SOURCE_DIR}/core/)
+  target_link_libraries(${PROJECT_NAME} glm glfw C:/VulkanSDK/1.3.283.0/Lib/vulkan-1.lib)
 
-target_include_directories(${PROJECT_NAME} PUBLIC C:/VulkanSDK/1.3.283.0/Include ${CMAKE_CURRENT_SOURCE_DIR}/core/)
-target_link_libraries(${PROJECT_NAME} glm glfw C:/VulkanSDK/1.3.283.0/Lib/vulkan-1.lib)
+else()
+
+  find_package(glfw3 REQUIRED)
+  find_package(Vulkan REQUIRED)
+  find_package(glm REQUIRED)
+
+  target_link_libraries(${PROJECT_NAME} glfw Vulkan::Vulkan glm)
+  target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/core/)
+
+endif()
+

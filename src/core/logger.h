@@ -2,7 +2,7 @@
 #define JET_LOGGER_H
 
 #include <cstdio>
-//#include <format>
+// #include <format>
 #include <iostream>
 
 namespace jet::Logger
@@ -25,7 +25,7 @@ inline std::string className(const std::string &prettyFunction, const std::strin
   return prettyFunction.substr(begin, end);
 }
 
-#define __CLASS_NAME__ className(__FUNCTION__, __FUNCDNAME__)
+#define __CLASS_NAME__ className(__PRETTY_FUNCTION__, __FUNCTION__)
 
 namespace jet
 {
@@ -134,11 +134,11 @@ template <typename... Args> inline void Error(const std::format_string<Args...> 
             << std::vformat(fmt.get(), std::make_format_args(args...)) << std::endl;
 }
 
-#define CHECK_IN(...) Logger::Display(__FUNCTION__)
+#define CHECK_IN(...) Logger::Display(__CLASS_NAME__, __FUNCTION__)
 
-inline void Display(const std::string &m)
+inline void Display(const std::string &c, const std::string &m)
 {
-  std::cout << Color::Mod::Cyan() << "[DISPLAY]: " << Color::Mod::Default() << m << std::endl;
+  std::cout << Color::Mod::Cyan() << "[DISPLAY]: " << Color::Mod::Default() << c << "::" << m << std::endl;
 }
 
 } // namespace Logger
