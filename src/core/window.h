@@ -41,6 +41,9 @@ public:
   GLFWwindow *GetGlfwWindow() const;
   void SetFramebufferResized(bool value);
   bool GetFramebufferResized() const;
+
+  u32 GetWidth() const;
+  u32 GetHeight() const;
 };
 
 } // namespace jet

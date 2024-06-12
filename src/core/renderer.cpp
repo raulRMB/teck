@@ -21,6 +21,9 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "backends/imgui_impl_glfw.h"
+#include "backends/imgui_impl_vulkan.h"
+#include "imgui.h"
 #include "primitives/vertex.h"
 
 namespace jet
@@ -70,6 +73,8 @@ void Renderer::Init(Window *window)
   vCreateDescriptorSets();
   vCreateCommandBuffers();
   vCreateSyncObjects();
+
+  ImGuiInit();
 }
 
 void Renderer::vCreateInstance()
@@ -248,6 +253,7 @@ void Renderer::vCreateLogicalDevice()
   std::vector<vk::DeviceQueueCreateInfo> queueCreateInfos;
 
   std::set<u32> uniqueQueueFamilies = {indices.graphicsFamily.value(), indices.presentFamily.value()};
+  mImGuiQueueFamily = indices.graphicsFamily.value();
 
   f32 queuePriority = 1.0f;
 
@@ -663,6 +669,13 @@ void Renderer::vCreateDescriptorPool()
   poolInfo.setMaxSets(MAX_FRAMES_IN_FLIGHT);
 
   mDescriptorPool = mDevice.createDescriptorPool(poolInfo);
+
+  vk::DescriptorPoolSize imGuiPoolSize{vk::DescriptorType::eCombinedImageSampler, 1};
+  vk::DescriptorPoolCreateInfo imGuiPoolInfo;
+  imGuiPoolInfo.setFlags(vk::DescriptorPoolCreateFlagBits::eFreeDescriptorSet);
+  imGuiPoolInfo.setPoolSizes(imGuiPoolSize);
+  imGuiPoolInfo.setMaxSets(1);
+  mImGuiPool = mDevice.createDescriptorPool(imGuiPoolInfo);
 }
 
 void Renderer::vCreateDescriptorSets()
@@ -742,6 +755,9 @@ void Renderer::vRecordCommandBuffer(const vk::CommandBuffer &commandBuffer, u32 
                                    nullptr);
 
   commandBuffer.drawIndexed(static_cast<u32>(Indices.size()), 1, 0, 0, 0);
+
+  ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), commandBuffer);
+
   commandBuffer.endRenderPass();
   commandBuffer.end();
 }
@@ -779,6 +795,29 @@ void Renderer::vCreateSyncObjects()
   }
 }
 
+void Renderer::ImGuiInit()
+{
+  ImGui::CreateContext();
+
+  ImGui::StyleColorsDark();
+
+  ImGui_ImplGlfw_InitForVulkan(mWindow->GetGlfwWindow(), true);
+
+  ImGui_ImplVulkan_InitInfo init_info = {};
+  init_info.Instance = mInstance;
+  init_info.PhysicalDevice = mPhysicalDevice;
+  init_info.QueueFamily = mImGuiQueueFamily;
+  init_info.DescriptorPool = mImGuiPool;
+  init_info.RenderPass = mRenderPass;
+  init_info.Subpass = 0;
+  init_info.Device = mDevice;
+  init_info.Queue = mGraphicsQueue;
+  init_info.MinImageCount = MAX_FRAMES_IN_FLIGHT;
+  init_info.ImageCount = MAX_FRAMES_IN_FLIGHT;
+  init_info.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
+  ImGui_ImplVulkan_Init(&init_info);
+}
+
 void Renderer::vRecreateSwapchain()
 {
   i32 width = 0, height = 0;
@@ -810,6 +849,21 @@ void Renderer::vCleanupSwapchain()
   }
 
   mDevice.destroySwapchainKHR(mSwapchain);
+}
+
+void Renderer::ImGuiDraw()
+{
+  ImGui_ImplVulkan_NewFrame();
+  ImGui_ImplGlfw_NewFrame();
+  ImGui::NewFrame();
+
+  ImGui::Begin("Hello World");
+
+  ImGui::Text("Hello");
+
+  ImGui::End();
+
+  ImGui::Render();
 }
 
 void Renderer::DrawFrame()
@@ -871,11 +925,21 @@ void Renderer::DrawFrame()
   mCurrentFrame = (mCurrentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 }
 
+void Renderer::ImGuiShutdown()
+{
+  ImGui_ImplVulkan_Shutdown();
+  ImGui_ImplGlfw_Shutdown();
+  ImGui::DestroyContext();
+  mDevice.destroyDescriptorPool(mImGuiPool);
+}
+
 void Renderer::Clean()
 {
   CHECK_IN();
 
   mDevice.waitIdle();
+
+  ImGuiShutdown();
 
   vCleanupSwapchain();
 

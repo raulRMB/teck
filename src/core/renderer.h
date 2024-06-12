@@ -1,6 +1,7 @@
 #ifndef JET_RENDERER_H
 #define JET_RENDERER_H
 
+#include "backends/imgui_impl_vulkan.h"
 #include "def.h"
 #include <vector>
 #include <vulkan/vulkan.hpp>
@@ -67,6 +68,10 @@ class Renderer
   std::vector<vk::DeviceMemory> mUniformBuffersMemory;
   std::vector<void *> mUniformBuffersMapped;
 
+  vk::DescriptorPool mImGuiPool;
+  u32 mImGuiQueueFamily = -1;
+  ImGui_ImplVulkanH_Window mImGuiWindow;
+
   vk::DescriptorPool mDescriptorPool;
   std::vector<vk::DescriptorSet> mDescriptorSets;
 
@@ -106,6 +111,10 @@ private:
   void vCreateDescriptorSets();
   void vCreateCommandBuffers();
   void vCreateSyncObjects();
+
+  void ImGuiInit();
+  void ImGuiDraw();
+  void ImGuiShutdown();
 
   void vRecreateSwapchain();
   void vCleanupSwapchain();

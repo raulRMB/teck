@@ -16,6 +16,16 @@ GLFWwindow *Window::GetGlfwWindow() const
   return pGlfwWindow;
 }
 
+u32 Window::GetWidth() const
+{
+  return mWidth;
+}
+
+u32 Window::GetHeight() const
+{
+  return mHeight;
+}
+
 void Window::Init()
 {
   CHECK_IN();
@@ -23,7 +33,6 @@ void Window::Init()
   glfwInit();
 
   glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-  /*glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);*/
   glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
   pGlfwWindow = glfwCreateWindow(mWidth, mHeight, mName.c_str(), nullptr, nullptr);
   glfwSetWindowUserPointer(pGlfwWindow, this);
@@ -56,6 +65,7 @@ void Window::FramebufferResizeCallback(GLFWwindow *window, i32 width, i32 height
   pWindow->mFramebufferResized = true;
   pWindow->mWidth = width;
   pWindow->mHeight = height;
+  Logger::Info("Resized");
 }
 
 void Window::SetFramebufferResized(bool value)
