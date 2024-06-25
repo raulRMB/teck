@@ -1,2 +1,2 @@
-# jet
-Jet Game Engine
+# teck
+Teck Game Engine
