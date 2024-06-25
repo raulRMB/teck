@@ -1,7 +1,7 @@
 #ifndef JET_VERTEX_H
 #define JET_VERTEX_H
 
-#include "../def.h"
+#include "../types.h"
 #include <glm/glm.hpp>
 #include <vulkan/vulkan.hpp>
 

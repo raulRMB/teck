@@ -834,6 +834,8 @@ void Renderer::vRecreateSwapchain()
   vCreateSwapchain();
   vCreateImageViews();
   vCreateFrameBuffers();
+
+  mWindow->SetFramebufferResized(false);
 }
 
 void Renderer::vCleanupSwapchain()
@@ -910,16 +912,17 @@ void Renderer::DrawFrame()
   }
   catch (const vk::OutOfDateKHRError &e)
   {
-    if (result == vk::Result::eErrorOutOfDateKHR || result == vk::Result::eSuboptimalKHR ||
-        mWindow->GetFramebufferResized())
-    {
-      vRecreateSwapchain();
-      mWindow->SetFramebufferResized(false);
-    }
-    else if (result != vk::Result::eSuccess)
-    {
-      Logger::Error("failed to present swap chain image!");
-    }
+  }
+
+  if (result == vk::Result::eErrorOutOfDateKHR || result == vk::Result::eSuboptimalKHR ||
+      mWindow->GetFramebufferResized())
+  {
+    vRecreateSwapchain();
+    mWindow->SetFramebufferResized(false);
+  }
+  else if (result != vk::Result::eSuccess)
+  {
+    Logger::Error("failed to present swap chain image!");
   }
 
   mCurrentFrame = (mCurrentFrame + 1) % MAX_FRAMES_IN_FLIGHT;

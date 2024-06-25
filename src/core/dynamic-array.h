@@ -1,7 +1,7 @@
 #ifndef JET_DYNAMIC_ARRAY_H
 #define JET_DYNAMIC_ARRAY_H
 
-#include "def.h"
+#include "types.h"
 
 namespace jet
 {
