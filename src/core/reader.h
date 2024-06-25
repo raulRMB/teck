@@ -1,10 +1,10 @@
-#ifndef JET_READER_H
-#define JET_READER_H
+#ifndef TECH_READER_H
+#define TECH_READER_H
 
 #include <string>
 #include <vector>
 
-namespace jet
+namespace tk
 {
 
 class Reader
@@ -13,6 +13,6 @@ public:
   static std::vector<char> ReadShader(const std::string &filename);
 };
 
-} // namespace jet
+} // namespace tk
 
-#endif // JET_READER_H
+#endif // TECH_READER_H

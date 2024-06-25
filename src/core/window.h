@@ -1,5 +1,5 @@
-#ifndef JET_WINDOW_H
-#define JET_WINDOW_H
+#ifndef TECH_WINDOW_H
+#define TECH_WINDOW_H
 
 #include <GLFW/glfw3.h>
 
@@ -7,7 +7,7 @@
 
 #include "core.h"
 
-namespace jet
+namespace tk
 {
 
 class Window
@@ -21,7 +21,7 @@ class Window
   u8 mFramebufferResized : 1;
 
 public:
-  Window(i32 Width = 800, i32 Height = 600, std::string &&Name = "jet");
+  Window(i32 Width = 800, i32 Height = 600, std::string &&Name = "tk");
 
 private:
   friend class Engine;
@@ -46,6 +46,6 @@ public:
   u32 GetHeight() const;
 };
 
-} // namespace jet
+} // namespace tk
 
-#endif // JET_WINDOW_H
+#endif // TECH_WINDOW_H

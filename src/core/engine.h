@@ -1,5 +1,5 @@
-#ifndef JET_ENGINE_H
-#define JET_ENGINE_H
+#ifndef TECK_ENGINE_H
+#define TECK_ENGINE_H
 
 #include "core.h"
 #include "networking/nettest.h"
@@ -7,7 +7,7 @@
 #include "window.h"
 #include <vector>
 
-namespace jet
+namespace tk
 {
 
 class Engine
@@ -46,6 +46,6 @@ private:
   void Clean();
 };
 
-} // namespace jet
+} // namespace tk
 
-#endif // JET_ENGINE_H
+#endif // TECK_ENGINE_H

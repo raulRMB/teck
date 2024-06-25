@@ -3,7 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <stdexcept>
 
-namespace jet
+namespace tk
 {
 
 Window::Window(i32 Width, i32 Height, std::string &&Name)
@@ -86,4 +86,4 @@ void Window::Clean()
   glfwTerminate();
 }
 
-} // namespace jet
+} // namespace tk

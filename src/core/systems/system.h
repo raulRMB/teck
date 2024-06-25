@@ -1,7 +1,7 @@
-#ifndef JET_SYSTEM_H
-#define JET_SYSTEM_H
+#ifndef TECH_SYSTEM_H
+#define TECH_SYSTEM_H
 
-namespace jet
+namespace tk
 {
 
 class System
@@ -15,6 +15,6 @@ public:
   }
 };
 
-} // namespace jet
+} // namespace tk
 
-#endif // JET_SYSTEM_H
+#endif // TECH_SYSTEM_H

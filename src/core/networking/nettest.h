@@ -9,7 +9,7 @@
 #include <string>
 #include <unordered_map>
 
-namespace jet
+namespace tk
 {
 
 class Server
@@ -95,4 +95,4 @@ private:
   HSteamNetConnection mConnection;
 };
 
-} // namespace jet
+} // namespace tk

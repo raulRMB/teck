@@ -1,10 +1,10 @@
 #include "core/logger.h"
-#ifndef JET_S_PLAYER_H
+#ifndef TECH_S_PLAYER_H
 
 #include "core/types.h"
 #include "update_system.h"
 
-namespace jet
+namespace tk
 {
 
 class SPlayer : public SUpdate
@@ -31,6 +31,6 @@ public:
   }
 };
 
-} // namespace jet
+} // namespace tk
 
-#endif // !JET_S_PLAYER_H
+#endif // !TECH_S_PLAYER_H

@@ -1,21 +1,21 @@
-#ifndef JET_LOGGER_H
-#define JET_LOGGER_H
+#ifndef TECH_LOGGER_H
+#define TECH_LOGGER_H
 
 #include <cstdio>
 // #include <format>
 #include <iostream>
 
-namespace jet::Logger
+namespace tk::Logger
 {
 template <typename... Args> inline void Error(const std::format_string<Args...> fmt, Args &&...args);
 }
 
 inline std::string className(const std::string &prettyFunction, const std::string &func)
 {
-  size_t begin = prettyFunction.find("jet::") + 5;
+  size_t begin = prettyFunction.find("tk::") + 4;
   if (begin == std::string::npos)
   {
-    jet::Logger::Error("Failed to parse class name");
+    tk::Logger::Error("Failed to parse class name");
     return "";
   }
 
@@ -27,7 +27,7 @@ inline std::string className(const std::string &prettyFunction, const std::strin
 
 #define __CLASS_NAME__ className(__PRETTY_FUNCTION__, __FUNCTION__)
 
-namespace jet
+namespace tk
 {
 
 namespace Logger
@@ -143,6 +143,6 @@ inline void Display(const std::string &c, const std::string &m)
 
 } // namespace Logger
 
-} // namespace jet
+} // namespace tk
 
-#endif // JET_LOGGER_H
+#endif // TECH_LOGGER_H

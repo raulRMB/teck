@@ -3,12 +3,12 @@
 #include <vulkan/vulkan_handles.hpp>
 #include <vulkan/vulkan_structs.hpp>
 
-namespace jet
+namespace tk
 {
 class Renderer;
 }
 
-namespace jet::ru
+namespace tk::ru
 {
 
 #define VK_TRY(fn, msg)                                                                                                \
@@ -61,4 +61,4 @@ void vCreateBuffer(const vk::Device &device, const vk::PhysicalDevice &physicalD
 void vCopyBuffer(const vk::Device &device, const vk::CommandPool &commandPool, const vk::Queue &graphicsQueue,
                  const vk::Buffer &srcBuffer, const vk::Buffer &dstBuffer, vk::DeviceSize size);
 
-} // namespace jet::ru
+} // namespace tk::ru

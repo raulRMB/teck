@@ -26,7 +26,7 @@
 #include "imgui.h"
 #include "primitives/vertex.h"
 
-namespace jet
+namespace tk
 {
 
 const vk::PhysicalDevice &Renderer::GetPhysicalDevice() const
@@ -985,4 +985,4 @@ void Renderer::Clean()
   mInstance.destroy();
 }
 
-} // namespace jet
+} // namespace tk

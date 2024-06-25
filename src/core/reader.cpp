@@ -1,16 +1,16 @@
 #include "reader.h"
 #include <fstream>
 
-namespace jet
+namespace tk
 {
 
 std::vector<char> Reader::ReadShader(const std::string &filename)
 {
-    #ifdef _WIN32
+#ifdef _WIN32
   std::string shaderAddress = "../rec/shaders/" + filename + ".spv";
-    #else
+#else
   std::string shaderAddress = "rec/shaders/" + filename + ".spv";
-    #endif
+#endif
   std::ifstream file(shaderAddress, std::ios::ate | std::ios::binary);
 
   if (!file.is_open())
@@ -29,4 +29,4 @@ std::vector<char> Reader::ReadShader(const std::string &filename)
   return buffer;
 }
 
-} // namespace jet
+} // namespace tk

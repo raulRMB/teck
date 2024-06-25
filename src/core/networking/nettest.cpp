@@ -1,6 +1,6 @@
 #include "nettest.h"
 
-namespace jet
+namespace tk
 {
 
 Server *Server::sCallbackInstance = nullptr;
@@ -81,4 +81,4 @@ void Server::OnConnectionStatusChangedStatic(SteamNetConnectionStatusChangedCall
   sCallbackInstance->OnSteamNetConnectionStatusChanged(pInfo);
 }
 
-} // namespace jet
+} // namespace tk

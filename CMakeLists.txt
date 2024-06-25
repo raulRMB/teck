@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(jet)
+project(teck)
 
 file(
         DOWNLOAD
@@ -54,8 +54,8 @@ else()
   find_package(glm REQUIRED)
   find_package(GameNetworkingSockets REQUIRED)
 
-  target_link_libraries(${PROJECT_NAME} PRIVATE glfw Vulkan::Vulkan glm jetlib GameNetworkingSockets)
-  target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/ jetlib)
+  target_link_libraries(${PROJECT_NAME} PRIVATE glfw Vulkan::Vulkan glm tecklib GameNetworkingSockets)
+  target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/ tecklib)
 
 endif()
 

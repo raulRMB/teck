@@ -1,11 +1,11 @@
-#ifndef JET_VERTEX_H
-#define JET_VERTEX_H
+#ifndef TECH_VERTEX_H
+#define TECH_VERTEX_H
 
 #include "../types.h"
 #include <glm/glm.hpp>
 #include <vulkan/vulkan.hpp>
 
-namespace jet
+namespace tk
 {
 struct Vertex
 {
@@ -49,6 +49,6 @@ const std::vector<Vertex> Vertices = {
 };
 
 const std::vector<u16> Indices = {0, 1, 2, 3, 0, 0xFFFF, 4, 5, 6, 7, 4};
-} // namespace jet
+} // namespace tk
 
-#endif // JET_VERTEX_H
+#endif // TECH_VERTEX_H

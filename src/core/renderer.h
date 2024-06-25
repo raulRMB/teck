@@ -1,5 +1,5 @@
-#ifndef JET_RENDERER_H
-#define JET_RENDERER_H
+#ifndef TECH_RENDERER_H
+#define TECH_RENDERER_H
 
 #include "backends/imgui_impl_vulkan.h"
 #include "core.h"
@@ -7,7 +7,7 @@
 #include <vulkan/vulkan.hpp>
 #include <vulkan/vulkan_handles.hpp>
 
-namespace jet
+namespace tk
 {
 struct UniformBufferObject
 {
@@ -127,6 +127,6 @@ private:
   void Clean();
 };
 
-} // namespace jet
+} // namespace tk
 
-#endif // JET_RENDERER_H
+#endif // TECH_RENDERER_H

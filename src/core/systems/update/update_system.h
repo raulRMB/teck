@@ -1,10 +1,10 @@
-#ifndef JET_S_UPDATE_H
-#define JET_S_UPDATE_H
+#ifndef TECH_S_UPDATE_H
+#define TECH_S_UPDATE_H
 
 #include "../system.h"
 #include "core/types.h"
 
-namespace jet
+namespace tk
 {
 
 class SUpdate : public System
@@ -13,6 +13,6 @@ public:
   virtual void Update(f32 deltaTime) = 0;
 };
 
-} // namespace jet
+} // namespace tk
 
-#endif // JET_S_UPDATE_H
+#endif // TECH_S_UPDATE_H

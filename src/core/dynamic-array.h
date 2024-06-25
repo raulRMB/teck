@@ -1,9 +1,9 @@
-#ifndef JET_DYNAMIC_ARRAY_H
-#define JET_DYNAMIC_ARRAY_H
+#ifndef TECK_DYNAMIC_ARRAY_H
+#define TECK_DYNAMIC_ARRAY_H
 
 #include "types.h"
 
-namespace jet
+namespace tk
 {
 
 template <typename T> class DynamicArray
@@ -82,6 +82,6 @@ private:
   T *mData{};
 };
 
-} // namespace jet
+} // namespace tk
 
-#endif // JET_DYNAMIC_ARRAY_H
+#endif // TECK_DYNAMIC_ARRAY_H

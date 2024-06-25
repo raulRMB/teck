@@ -8,7 +8,7 @@
 #include <cstring>
 #include <iostream>
 
-namespace jet
+namespace tk
 {
 
 Engine::Engine() : bRunning(false)
@@ -161,4 +161,4 @@ void Engine::Clean()
   mWindow.Clean();
 }
 
-} // namespace jet
+} // namespace tk
