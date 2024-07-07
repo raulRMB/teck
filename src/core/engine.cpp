@@ -1,9 +1,8 @@
 #include "engine.h"
 
-#include "core/networking/nettest.h"
-#include "core/systems/update/SPlayer.h"
-#include "core/systems/update/update_system.h"
 #include "logger.h"
+#include "systems/update/SPlayer.h"
+#include "systems/update/update_system.h"
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
@@ -23,17 +22,6 @@ void Engine::Init()
   mWindow.Init();
   mRenderer.Init(&mWindow);
   bRunning = true;
-
-  if (bIsServer)
-  {
-    mServer = Server();
-    mServer.StartConnection();
-  }
-  else
-  {
-    mClient = Client();
-    mClient.ConnectToServer("127.0.0.1:27020");
-  }
 
   InitSystems();
 }
@@ -69,7 +57,6 @@ i32 Engine::Run(i32 argc, char **argv)
 
     do
     {
-      engine.NetPoll();
       engine.PollEvents();
       engine.mRenderer.ImGuiDraw();
       engine.mRenderer.DrawFrame();
@@ -113,18 +100,6 @@ void Engine::ParseArgs(i32 argc, char **argv)
   }
 }
 
-void Engine::NetPoll()
-{
-  if (bIsServer)
-  {
-    mServer.Loop();
-  }
-  else
-  {
-    mClient.Loop();
-  }
-}
-
 void Engine::PollEvents()
 {
   if (mWindow.ShouldClose())
@@ -146,15 +121,6 @@ void Engine::Loop()
 void Engine::Clean()
 {
   CHECK_IN();
-
-  if (bIsServer)
-  {
-    mServer.Kill();
-  }
-  else
-  {
-    mClient.Kill();
-  }
 
   CleanSystems();
   mRenderer.Clean();

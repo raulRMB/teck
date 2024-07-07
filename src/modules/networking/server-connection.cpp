@@ -1,11 +1,13 @@
-#include "nettest.h"
+#include "server-connection.h"
+#include "core/logger.h"
+#include <GameNetworkingSockets/steam/steamnetworkingsockets.h>
 
-namespace tk
+namespace tk::net
 {
 
-Server *Server::sCallbackInstance = nullptr;
+ServerConnection *ServerConnection::sCallbackInstance = nullptr;
 
-void Server::StartConnection()
+void ServerConnection::StartConnection()
 {
   sCallbackInstance = this;
 
@@ -35,7 +37,7 @@ void Server::StartConnection()
   }
 }
 
-void Server::OnSteamNetConnectionStatusChanged(SteamNetConnectionStatusChangedCallback_t *pInfo)
+void ServerConnection::OnSteamNetConnectionStatusChanged(SteamNetConnectionStatusChangedCallback_t *pInfo)
 {
   Logger::Info("NetStatusChanged");
 
@@ -55,7 +57,7 @@ void Server::OnSteamNetConnectionStatusChanged(SteamNetConnectionStatusChangedCa
   }
 }
 
-void Server::Loop()
+bool ServerConnection::Loop()
 {
   mNetSockets->RunCallbacks();
 
@@ -65,20 +67,25 @@ void Server::Loop()
     int numMsgs = sockets->ReceiveMessagesOnConnection(conn, &pIncommingMsg, 1);
     if (numMsgs > 0 && pIncommingMsg)
     {
+      std::string message((char *)pIncommingMsg->m_pData, pIncommingMsg->m_cbSize);
       Logger::Info("Receive message {}", std::string((char *)pIncommingMsg->m_pData, pIncommingMsg->m_cbSize));
       pIncommingMsg->Release();
+      if (message == "Exit" || message == "exit")
+      {
+        return false;
+      }
     }
   }
+  return true;
 }
 
-void Server::Kill()
+void ServerConnection::Kill()
 {
   GameNetworkingSockets_Kill();
 }
 
-void Server::OnConnectionStatusChangedStatic(SteamNetConnectionStatusChangedCallback_t *pInfo)
+void ServerConnection::OnConnectionStatusChangedStatic(SteamNetConnectionStatusChangedCallback_t *pInfo)
 {
   sCallbackInstance->OnSteamNetConnectionStatusChanged(pInfo);
 }
-
-} // namespace tk
+} // namespace tk::net

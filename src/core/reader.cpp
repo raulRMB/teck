@@ -1,4 +1,5 @@
 #include "reader.h"
+#include "core/logger.h"
 #include <fstream>
 
 namespace tk
@@ -15,7 +16,8 @@ std::vector<char> Reader::ReadShader(const std::string &filename)
 
   if (!file.is_open())
   {
-    throw std::runtime_error("failed to open file!");
+    Logger::Error("Failed to open {}", filename);
+    throw std::runtime_error("");
   }
 
   size_t fileSize = (size_t)file.tellg();

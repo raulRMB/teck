@@ -2,7 +2,6 @@
 #define TECK_ENGINE_H
 
 #include "core.h"
-#include "networking/nettest.h"
 #include "renderer.h"
 #include "window.h"
 #include <vector>
@@ -22,9 +21,6 @@ private:
   Renderer mRenderer;
   Window mWindow;
 
-  Server mServer;
-  Client mClient;
-
   std::vector<class SUpdate *> mUpdateSystems;
 
 private:
@@ -39,7 +35,6 @@ private:
 
   void ParseArgs(i32 argc, char **argv);
 
-  void NetPoll();
   void PollEvents();
   void Loop();
 
