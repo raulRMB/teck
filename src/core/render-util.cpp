@@ -13,10 +13,10 @@
 namespace tk::ru
 {
 
-SwapChainSupportDetails vQuerySwapChainSupport(const Renderer &renderer)
+SwapChainSupportDetails vQuerySwapChainSupport(const Renderer& renderer)
 {
-  const vk::PhysicalDevice &device = renderer.GetPhysicalDevice();
-  const vk::SurfaceKHR &surface = renderer.GetSurfaceKHR();
+  const vk::PhysicalDevice& device = renderer.GetPhysicalDevice();
+  const vk::SurfaceKHR& surface = renderer.GetSurfaceKHR();
 
   SwapChainSupportDetails details;
 
@@ -27,10 +27,10 @@ SwapChainSupportDetails vQuerySwapChainSupport(const Renderer &renderer)
   return details;
 }
 
-bool vIsDeviceSuitable(const Renderer &renderer)
+bool vIsDeviceSuitable(const Renderer& renderer)
 {
-  const vk::PhysicalDevice &device = renderer.GetPhysicalDevice();
-  const vk::SurfaceKHR &surface = renderer.GetSurfaceKHR();
+  const vk::PhysicalDevice& device = renderer.GetPhysicalDevice();
+  const vk::SurfaceKHR& surface = renderer.GetSurfaceKHR();
 
   vk::PhysicalDeviceProperties deviceProperties = device.getProperties();
   vk::PhysicalDeviceFeatures deviceFeatures = device.getFeatures();
@@ -57,7 +57,7 @@ bool vIsDeviceSuitable(const Renderer &renderer)
   return isCorrectDeviceType && indices.isComplete() && extensionsSupported && swapChainAdequate;
 }
 
-void vPickPhysicalDevice(vk::Instance &instance, vk::PhysicalDevice &physicalDevice)
+void vPickPhysicalDevice(vk::Instance& instance, vk::PhysicalDevice& physicalDevice)
 {
   std::vector<vk::PhysicalDevice> devices = instance.enumeratePhysicalDevices();
 
@@ -68,7 +68,7 @@ void vPickPhysicalDevice(vk::Instance &instance, vk::PhysicalDevice &physicalDev
 
   std::multimap<i32, vk::PhysicalDevice> candidates;
 
-  for (const vk::PhysicalDevice &device : devices)
+  for (const vk::PhysicalDevice& device : devices)
   {
     i32 score = vRateDeviceSuitability(device);
     candidates.insert(std::make_pair(score, device));
@@ -85,7 +85,7 @@ void vPickPhysicalDevice(vk::Instance &instance, vk::PhysicalDevice &physicalDev
   }
 }
 
-i32 vRateDeviceSuitability(const vk::PhysicalDevice &device)
+i32 vRateDeviceSuitability(const vk::PhysicalDevice& device)
 {
   vk::PhysicalDeviceProperties deviceProperties = device.getProperties();
   vk::PhysicalDeviceFeatures deviceFeatures = device.getFeatures();
@@ -107,14 +107,14 @@ i32 vRateDeviceSuitability(const vk::PhysicalDevice &device)
   return score;
 }
 
-QueueFamilyIndices vFindQueueFamilies(const vk::PhysicalDevice &device, const vk::SurfaceKHR &surface)
+QueueFamilyIndices vFindQueueFamilies(const vk::PhysicalDevice& device, const vk::SurfaceKHR& surface)
 {
   QueueFamilyIndices indices;
 
   std::vector<vk::QueueFamilyProperties> queueFamilies = device.getQueueFamilyProperties();
 
   u32 i = 0;
-  for (const vk::QueueFamilyProperties &queueFamily : queueFamilies)
+  for (const vk::QueueFamilyProperties& queueFamily : queueFamilies)
   {
     if (queueFamily.queueFlags & vk::QueueFlagBits::eGraphics)
     {
@@ -137,21 +137,21 @@ QueueFamilyIndices vFindQueueFamilies(const vk::PhysicalDevice &device, const vk
   return indices;
 }
 
-std::vector<const char *> vGetDeviceExtensions()
+std::vector<const char*> vGetDeviceExtensions()
 {
   return {VK_KHR_SWAPCHAIN_EXTENSION_NAME};
 }
 
-bool vCheckDeviceExtensionSupport(const Renderer &renderer)
+bool vCheckDeviceExtensionSupport(const Renderer& renderer)
 {
   std::vector<vk::ExtensionProperties> availableExtensions =
       renderer.GetPhysicalDevice().enumerateDeviceExtensionProperties();
 
-  const std::vector<const char *> &extensions = vGetDeviceExtensions();
+  const std::vector<const char*>& extensions = vGetDeviceExtensions();
 
   std::set<std::string> requiredExtensions(extensions.begin(), extensions.end());
 
-  for (const vk::ExtensionProperties &extension : availableExtensions)
+  for (const vk::ExtensionProperties& extension : availableExtensions)
   {
     requiredExtensions.erase(extension.extensionName);
   }
@@ -159,9 +159,9 @@ bool vCheckDeviceExtensionSupport(const Renderer &renderer)
   return requiredExtensions.empty();
 }
 
-vk::SurfaceFormatKHR vChooseSwapSurfaceFormat(const std::vector<vk::SurfaceFormatKHR> &availableFormats)
+vk::SurfaceFormatKHR vChooseSwapSurfaceFormat(const std::vector<vk::SurfaceFormatKHR>& availableFormats)
 {
-  for (const vk::SurfaceFormatKHR &format : availableFormats)
+  for (const vk::SurfaceFormatKHR& format : availableFormats)
   {
     if (format.format == vk::Format::eB8G8R8A8Srgb && format.colorSpace == vk::ColorSpaceKHR::eSrgbNonlinear)
     {
@@ -171,9 +171,9 @@ vk::SurfaceFormatKHR vChooseSwapSurfaceFormat(const std::vector<vk::SurfaceForma
   return availableFormats[0];
 }
 
-vk::PresentModeKHR vChooseSwapPresentMode(const std::vector<vk::PresentModeKHR> &availablePresentModes)
+vk::PresentModeKHR vChooseSwapPresentMode(const std::vector<vk::PresentModeKHR>& availablePresentModes)
 {
-  for (const vk::PresentModeKHR &mode : availablePresentModes)
+  for (const vk::PresentModeKHR& mode : availablePresentModes)
   {
     if (mode == vk::PresentModeKHR::eMailbox)
     {
@@ -184,7 +184,7 @@ vk::PresentModeKHR vChooseSwapPresentMode(const std::vector<vk::PresentModeKHR> 
   return availablePresentModes[0];
 }
 
-vk::Extent2D vChooseSwapExtent(const Renderer &renderer, const vk::SurfaceCapabilitiesKHR &capabilities)
+vk::Extent2D vChooseSwapExtent(const Renderer& renderer, const vk::SurfaceCapabilitiesKHR& capabilities)
 {
   if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max())
   {
@@ -206,13 +206,13 @@ vk::Extent2D vChooseSwapExtent(const Renderer &renderer, const vk::SurfaceCapabi
   }
 }
 
-vk::ShaderModule CreateShaderModule(const vk::Device &device, const std::string &shaderName)
+vk::ShaderModule CreateShaderModule(const vk::Device& device, const std::string& shaderName)
 {
   std::vector<char> code = Reader::ReadShader(shaderName);
 
   vk::ShaderModuleCreateInfo createInfo{};
   createInfo.setCodeSize(code.size());
-  createInfo.setPCode(reinterpret_cast<const u32 *>(code.data()));
+  createInfo.setPCode(reinterpret_cast<const u32*>(code.data()));
 
   vk::ShaderModule module = device.createShaderModule(createInfo);
 
@@ -224,9 +224,9 @@ vk::ShaderModule CreateShaderModule(const vk::Device &device, const std::string 
   return module;
 }
 
-void vCreateBuffer(const vk::Device &device, const vk::PhysicalDevice &physicalDevice, vk::DeviceSize size,
-                   vk::BufferUsageFlags usage, vk::MemoryPropertyFlags properties, vk::Buffer &buffer,
-                   vk::DeviceMemory &bufferMemory)
+void vCreateBuffer(const vk::Device& device, const vk::PhysicalDevice& physicalDevice, vk::DeviceSize size,
+                   vk::BufferUsageFlags usage, vk::MemoryPropertyFlags properties, vk::Buffer& buffer,
+                   vk::DeviceMemory& bufferMemory)
 {
   vk::BufferCreateInfo bufferInfo{};
   bufferInfo.setSize(size);
@@ -245,8 +245,8 @@ void vCreateBuffer(const vk::Device &device, const vk::PhysicalDevice &physicalD
   device.bindBufferMemory(buffer, bufferMemory, 0);
 }
 
-void vCopyBuffer(const vk::Device &device, const vk::CommandPool &commandPool, const vk::Queue &graphicsQueue,
-                 const vk::Buffer &srcBuffer, const vk::Buffer &dstBuffer, vk::DeviceSize size)
+void vCopyBuffer(const vk::Device& device, const vk::CommandPool& commandPool, const vk::Queue& graphicsQueue,
+                 const vk::Buffer& srcBuffer, const vk::Buffer& dstBuffer, vk::DeviceSize size)
 {
   vk::CommandBufferAllocateInfo allocateInfo{};
   allocateInfo.setLevel(vk::CommandBufferLevel::ePrimary);
@@ -276,7 +276,7 @@ void vCopyBuffer(const vk::Device &device, const vk::CommandPool &commandPool, c
   device.freeCommandBuffers(commandPool, commandBuffer);
 }
 
-u32 vFindMemoryType(const vk::PhysicalDevice &physicalDevice, u32 typeFilter, vk::MemoryPropertyFlags properties)
+u32 vFindMemoryType(const vk::PhysicalDevice& physicalDevice, u32 typeFilter, vk::MemoryPropertyFlags properties)
 {
   vk::PhysicalDeviceMemoryProperties memProperties = physicalDevice.getMemoryProperties();
 
@@ -289,6 +289,11 @@ u32 vFindMemoryType(const vk::PhysicalDevice &physicalDevice, u32 typeFilter, vk
   }
 
   return 0;
+}
+
+void CopyDataAtOffset(void* dest, size_t offset, const void* src, size_t size)
+{
+  memcpy(reinterpret_cast<char*>(dest) + offset, src, size);
 }
 
 } // namespace tk::ru

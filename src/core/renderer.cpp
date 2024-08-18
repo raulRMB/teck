@@ -1,6 +1,8 @@
 #include "renderer.h"
 
 #include <GLFW/glfw3.h>
+#include <cstddef>
+#include <cstring>
 #include <stdexcept>
 #include <vector>
 #include <vulkan/vulkan_core.h>
@@ -10,7 +12,7 @@
 #include <vulkan/vulkan_handles.hpp>
 
 #include "core.h"
-#include "dynamic-array.h"
+#include "dynamic_array.h"
 #include "logger.h"
 #include "render-util.h"
 #include "window.h"
@@ -29,26 +31,26 @@
 namespace tk
 {
 
-const vk::PhysicalDevice &Renderer::GetPhysicalDevice() const
+const vk::PhysicalDevice& Renderer::GetPhysicalDevice() const
 {
   return mPhysicalDevice;
 }
 
-const vk::Device &Renderer::GetDevice() const
+const vk::Device& Renderer::GetDevice() const
 {
   return mDevice;
 }
-const vk::SurfaceKHR &Renderer::GetSurfaceKHR() const
+const vk::SurfaceKHR& Renderer::GetSurfaceKHR() const
 {
   return mSurface;
 }
 
-const Window &Renderer::GetWindow() const
+const Window& Renderer::GetWindow() const
 {
   return *mWindow;
 }
 
-void Renderer::Init(Window *window)
+void Renderer::Init(Window* window)
 {
   CHECK_IN();
 
@@ -74,6 +76,11 @@ void Renderer::Init(Window *window)
   vCreateCommandBuffers();
   vCreateSyncObjects();
 
+  for (u32 i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
+  {
+    UpdateCamera(i);
+  }
+
   ImGuiInit();
 }
 
@@ -98,7 +105,7 @@ void Renderer::vCreateInstance()
 
   createInfo.flags |= vk::InstanceCreateFlagBits::eEnumeratePortabilityKHR;
 
-  std::vector<const char *> requiredExtensions = vGetRequiredExtensions();
+  std::vector<const char*> requiredExtensions = vGetRequiredExtensions();
 
   createInfo.enabledExtensionCount = (u32)requiredExtensions.size();
   createInfo.ppEnabledExtensionNames = requiredExtensions.data();
@@ -118,12 +125,12 @@ void Renderer::vCreateInstance()
   VK_TRY(vk::createInstance(&createInfo, nullptr, &mInstance), "Failed to create VkInstance");
 }
 
-std::vector<const char *> Renderer::vGetRequiredExtensions()
+std::vector<const char*> Renderer::vGetRequiredExtensions()
 {
   u32 glfwExtensionCount = 0;
-  const char **glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
+  const char** glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
 
-  std::vector<const char *> extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
+  std::vector<const char*> extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
   extensions.emplace_back(VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME);
 
   if (mEnableValidationLayers)
@@ -136,8 +143,8 @@ std::vector<const char *> Renderer::vGetRequiredExtensions()
 
 VKAPI_ATTR VkBool32 VKAPI_CALL Renderer::vDebugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
                                                         VkDebugUtilsMessageTypeFlagsEXT messageType,
-                                                        const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData,
-                                                        void *pUserData)
+                                                        const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
+                                                        void* pUserData)
 {
   if (messageSeverity >= VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT)
     Logger::Error("Validation Layer: {}", pCallbackData->pMessage);
@@ -156,11 +163,11 @@ void Renderer::vGetExtensions()
 
   DynamicArray<VkExtensionProperties> extensions(extensionCount);
 
-  vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, extensions.Data());
+  vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, extensions.data());
 
   Logger::Info("Available Extensions");
 
-  for (const VkExtensionProperties &extension : extensions)
+  for (const VkExtensionProperties& extension : extensions)
   {
     Logger::Message("{}", extension.extensionName);
   }
@@ -168,7 +175,7 @@ void Renderer::vGetExtensions()
 
 void Renderer::vSetValidationLayers()
 {
-  const std::vector<const char *> validationLayers = {"VK_LAYER_KHRONOS_validation"};
+  const std::vector<const char*> validationLayers = {"VK_LAYER_KHRONOS_validation"};
 
 #ifdef NDEBUG
   const bool enableValidationLayers = false;
@@ -183,20 +190,20 @@ bool Renderer::vCheckValidationLayerSupport()
   vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
 
   DynamicArray<VkLayerProperties> availableLayers(layerCount);
-  vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.Data());
+  vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
 
   Logger::Info("Available Validation Layers");
 
-  for (const VkLayerProperties &layer : availableLayers)
+  for (const VkLayerProperties& layer : availableLayers)
   {
     Logger::Message("{}", layer.layerName);
   }
 
-  for (const char *layerName : mValidationLayers)
+  for (const char* layerName : mValidationLayers)
   {
     bool layerFound = false;
 
-    for (const VkLayerProperties &layerProperties : availableLayers)
+    for (const VkLayerProperties& layerProperties : availableLayers)
     {
       if (strcmp(layerName, layerProperties.layerName) == 0)
       {
@@ -274,7 +281,7 @@ void Renderer::vCreateLogicalDevice()
 
   createInfo.pEnabledFeatures = &deviceFeatures;
 
-  const std::vector<const char *> &deviceExtensions = ru::vGetDeviceExtensions();
+  const std::vector<const char*>& deviceExtensions = ru::vGetDeviceExtensions();
 
   createInfo.enabledExtensionCount = (u32)deviceExtensions.size();
   createInfo.ppEnabledExtensionNames = deviceExtensions.data();
@@ -603,7 +610,7 @@ void Renderer::vCreateVertexBuffer()
                     vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent, stagingBuffer,
                     stagingBufferMemory);
 
-  void *data;
+  void* data;
   VK_TRY(mDevice.mapMemory(stagingBufferMemory, 0, bufferSize, vk::MemoryMapFlags(0), &data), "Failed to map memory");
   memcpy(data, Vertices.data(), bufferSize);
   mDevice.unmapMemory(stagingBufferMemory);
@@ -627,7 +634,7 @@ void Renderer::vCreateIndexBuffer()
                     vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent, stagingBuffer,
                     stagingBufferMemory);
 
-  void *data;
+  void* data;
   VK_TRY(mDevice.mapMemory(stagingBufferMemory, 0, bufferSize, vk::MemoryMapFlags(0), &data), "Failed to map memory");
   memcpy(data, Indices.data(), bufferSize);
   mDevice.unmapMemory(stagingBufferMemory);
@@ -718,7 +725,7 @@ void Renderer::vCreateCommandBuffers()
   mCommandBuffers = mDevice.allocateCommandBuffers(allocInfo);
 }
 
-void Renderer::vRecordCommandBuffer(const vk::CommandBuffer &commandBuffer, u32 imageIndex)
+void Renderer::vRecordCommandBuffer(const vk::CommandBuffer& commandBuffer, u32 imageIndex)
 {
   vk::CommandBufferBeginInfo beginInfo;
 
@@ -741,13 +748,13 @@ void Renderer::vRecordCommandBuffer(const vk::CommandBuffer &commandBuffer, u32 
                                    .setHeight((f32)mSwapchainExtent.height)
                                    .setMinDepth(0.f)
                                    .setMaxDepth(1.f));
-  commandBuffer.setLineWidth(2.0f);
+  commandBuffer.setLineWidth(10.0f);
   commandBuffer.setScissor(0, vk::Rect2D().setOffset({0, 0}).setExtent(mSwapchainExtent));
 
   vk::Buffer buffers[] = {mVertexBuffer};
   vk::DeviceSize offsets[] = {0};
 
-  vUpdateUniformBuffer(mCurrentFrame);
+  // vUpdateUniformBuffer(mCurrentFrame);
 
   commandBuffer.bindVertexBuffers(0, 1, buffers, offsets);
   commandBuffer.bindIndexBuffer(mIndexBuffer, 0, vk::IndexType::eUint16);
@@ -762,6 +769,19 @@ void Renderer::vRecordCommandBuffer(const vk::CommandBuffer &commandBuffer, u32 
   commandBuffer.end();
 }
 
+void Renderer::UpdateCamera(u32 currentImage)
+{
+  UniformBufferObject ubo{};
+  ubo.model = m4(1.f);
+  ubo.view = glm::lookAt(glm::vec3(2.f, 2.f, 2.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 1.f));
+  ubo.proj = glm::perspective(glm::radians(45.f), mSwapchainExtent.width / (f32)mSwapchainExtent.height, 0.1f, 10.f);
+  ubo.proj[1][1] *= -1;
+
+  /*size_t size = sizeof(UniformBufferObject) - offsetof(UniformBufferObject, view);*/
+  /*ru::CopyDataAtOffset(mUniformBuffersMapped[currentImage], offsetof(UniformBufferObject, view), &ubo.view, size);*/
+  memcpy(mUniformBuffersMapped[currentImage], &ubo, sizeof(ubo));
+}
+
 void Renderer::vUpdateUniformBuffer(u32 currentImage)
 {
   static auto startTime = std::chrono::high_resolution_clock::now();
@@ -769,13 +789,8 @@ void Renderer::vUpdateUniformBuffer(u32 currentImage)
   auto currentTime = std::chrono::high_resolution_clock::now();
   f32 time = std::chrono::duration<f32, std::chrono::seconds::period>(currentTime - startTime).count();
 
-  UniformBufferObject ubo{};
-  ubo.model = glm::rotate(glm::mat4(1.f), time * glm::radians(90.f), glm::vec3(0.f, 0.f, 1.f));
-  ubo.view = glm::lookAt(glm::vec3(2.f, 2.f, 2.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 1.f));
-  ubo.proj = glm::perspective(glm::radians(45.f), mSwapchainExtent.width / (f32)mSwapchainExtent.height, 0.1f, 10.f);
-  ubo.proj[1][1] *= -1;
-
-  memcpy(mUniformBuffersMapped[currentImage], &ubo, sizeof(ubo));
+  m4 model = glm::rotate(glm::mat4(1.f), time * glm::radians(90.f), glm::vec3(0.f, 0.f, 1.f));
+  memcpy(mUniformBuffersMapped[currentImage], &model, sizeof(model));
 }
 
 void Renderer::vCreateSyncObjects()
@@ -910,7 +925,7 @@ void Renderer::DrawFrame()
   {
     result = mPresentQueue.presentKHR(presentInfo);
   }
-  catch (const vk::OutOfDateKHRError &e)
+  catch (const vk::OutOfDateKHRError& e)
   {
   }
 

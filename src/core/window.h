@@ -16,15 +16,15 @@ class Window
   i32 mHeight;
   std::string mName;
 
-  GLFWwindow *pGlfwWindow{};
+  GLFWwindow* pGlfwWindow{};
 
   u8 mFramebufferResized : 1;
 
 public:
-  Window(i32 Width = 800, i32 Height = 600, std::string &&Name = "tk");
+  Window(i32 Width = 800, i32 Height = 600, std::string&& Name = "tk");
 
 private:
-  friend class Engine;
+  friend class ClientEngine;
 
   void Init();
 
@@ -33,12 +33,12 @@ private:
 
   void SetGLFWCallbacks();
 
-  static void FramebufferResizeCallback(GLFWwindow *window, i32 width, i32 height);
+  static void FramebufferResizeCallback(GLFWwindow* window, i32 width, i32 height);
 
   void Clean();
 
 public:
-  GLFWwindow *GetGlfwWindow() const;
+  GLFWwindow* GetGlfwWindow() const;
   void SetFramebufferResized(bool value);
   bool GetFramebufferResized() const;
 

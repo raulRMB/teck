@@ -42,13 +42,13 @@ struct Vertex
   }
 };
 
-const std::vector<Vertex> Vertices = {
-    {{-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}}, {{0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}},  {{0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}},
-    {{-0.5f, 0.5f}, {1.0f, 1.0f, 1.0f}},  {{-0.2f, -0.2f}, {1.0f, 1.0f, 1.0f}}, {{0.2f, -0.2f}, {1.0f, 1.0f, 1.0f}},
-    {{0.2f, 0.2f}, {1.0f, 1.0f, 1.0f}},   {{-0.2f, 0.2f}, {1.0f, 1.0f, 1.0f}},
-};
+const std::vector<Vertex> Vertices = {{{-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}},
+                                      {{0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}},
+                                      {{0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}},
+                                      {{-0.5f, 0.5f}, {1.0f, 1.0f, 1.0f}}};
 
-const std::vector<u16> Indices = {0, 1, 2, 3, 0, 0xFFFF, 4, 5, 6, 7, 4};
+const std::vector<u16> Indices = {0, 1, 2, 3, 0};
+
 } // namespace tk
 
 #endif // TECH_VERTEX_H

@@ -9,6 +9,7 @@
 
 namespace tk
 {
+
 struct UniformBufferObject
 {
   m4 model;
@@ -18,7 +19,7 @@ struct UniformBufferObject
 
 class Renderer
 {
-  const std::vector<const char *> mValidationLayers = {"VK_LAYER_KHRONOS_validation"};
+  const std::vector<const char*> mValidationLayers = {"VK_LAYER_KHRONOS_validation"};
 
   const int MAX_FRAMES_IN_FLIGHT = 2;
 
@@ -53,7 +54,7 @@ class Renderer
 
   std::vector<vk::Framebuffer> mSwapChainFrameBuffers;
 
-  class Window *mWindow;
+  class Window* mWindow;
 
   u32 mCurrentFrame = 0;
 
@@ -66,7 +67,7 @@ class Renderer
 
   std::vector<vk::Buffer> mUniformBuffers;
   std::vector<vk::DeviceMemory> mUniformBuffersMemory;
-  std::vector<void *> mUniformBuffersMapped;
+  std::vector<void*> mUniformBuffersMapped;
 
   vk::DescriptorPool mImGuiPool;
   u32 mImGuiQueueFamily = -1;
@@ -76,23 +77,23 @@ class Renderer
   std::vector<vk::DescriptorSet> mDescriptorSets;
 
 public:
-  const vk::PhysicalDevice &GetPhysicalDevice() const;
-  const vk::Device &GetDevice() const;
-  const vk::SurfaceKHR &GetSurfaceKHR() const;
-  const Window &GetWindow() const;
+  const vk::PhysicalDevice& GetPhysicalDevice() const;
+  const vk::Device& GetDevice() const;
+  const vk::SurfaceKHR& GetSurfaceKHR() const;
+  const Window& GetWindow() const;
 
-private:
-  void Init(class Window *window);
+public:
+  void Init(class Window* window);
 
   void vCreateInstance();
   void vGetExtensions();
   void vSetValidationLayers();
   bool vCheckValidationLayerSupport();
-  std::vector<const char *> vGetRequiredExtensions();
+  std::vector<const char*> vGetRequiredExtensions();
   static VKAPI_ATTR VkBool32 VKAPI_CALL vDebugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
                                                        VkDebugUtilsMessageTypeFlagsEXT messageType,
-                                                       const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData,
-                                                       void *pUserData);
+                                                       const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
+                                                       void* pUserData);
 
   void vSetupDebugMessenger();
   void vCreateSurface();
@@ -119,8 +120,9 @@ private:
   void vRecreateSwapchain();
   void vCleanupSwapchain();
 
-  void vRecordCommandBuffer(const vk::CommandBuffer &CommandBuffer, u32 imageIndex);
+  void vRecordCommandBuffer(const vk::CommandBuffer& CommandBuffer, u32 imageIndex);
   void vUpdateUniformBuffer(u32 currentImage);
+  void UpdateCamera(u32 currentImage);
 
   void DrawFrame();
 

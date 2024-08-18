@@ -1,8 +1,10 @@
 #ifndef TECK_NET_CLIENT_CONNECTION_H
 #define TECK_NET_CLIENT_CONNECTION_H
 
-#include "connection.h"
+#include "modules/common/networking/connection.h"
 #include <GameNetworkingSockets/steam/isteamnetworkingsockets.h>
+#include <GameNetworkingSockets/steam/isteamnetworkingutils.h>
+#include <GameNetworkingSockets/steam/steamnetworkingtypes.h>
 #include <string>
 
 namespace tk::net
@@ -10,7 +12,7 @@ namespace tk::net
 
 class ClientConnection : public Connection
 {
-  static inline void OnSteamNetConnectionStatusChanged(SteamNetConnectionStatusChangedCallback_t *pInfo);
+  static inline void OnSteamNetConnectionStatusChanged(SteamNetConnectionStatusChangedCallback_t* pInfo);
 
 public:
   void ConnectToServer(std::string address);
@@ -20,7 +22,7 @@ public:
   void SendExitMessage();
 
 private:
-  ISteamNetworkingSockets *mNetSockets;
+  ISteamNetworkingSockets* mNetSockets;
   HSteamNetConnection mConnection;
 };
 

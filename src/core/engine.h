@@ -2,8 +2,6 @@
 #define TECK_ENGINE_H
 
 #include "core.h"
-#include "renderer.h"
-#include "window.h"
 #include <vector>
 
 namespace tk
@@ -11,34 +9,33 @@ namespace tk
 
 class Engine
 {
+protected:
   u8 bRunning : 1;
-  u8 bIsServer : 1;
+  static Engine mInstance;
 
-private:
+protected:
   Engine();
 
-private:
-  Renderer mRenderer;
-  Window mWindow;
+public:
+  static Engine& Get();
 
-  std::vector<class SUpdate *> mUpdateSystems;
+private:
+  std::vector<class SUpdate*> mUpdateSystems{};
 
 private:
   void InitSystems();
   void CleanSystems();
 
-public:
-  static i32 Run(i32 argc, char **argv);
+protected:
+  virtual void Init();
 
-private:
-  void Init();
+  virtual void ParseArgs(i32 argc, char** argv);
 
-  void ParseArgs(i32 argc, char **argv);
+  virtual void PollEvents();
+  virtual void Loop();
+  virtual void Draw();
 
-  void PollEvents();
-  void Loop();
-
-  void Clean();
+  virtual void Clean();
 };
 
 } // namespace tk

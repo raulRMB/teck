@@ -1,11 +1,11 @@
-#include "server-connection.h"
 #include "core/logger.h"
+#include "server-connection.h"
 #include <GameNetworkingSockets/steam/steamnetworkingsockets.h>
 
 namespace tk::net
 {
 
-ServerConnection *ServerConnection::sCallbackInstance = nullptr;
+ServerConnection* ServerConnection::sCallbackInstance = nullptr;
 
 void ServerConnection::StartConnection()
 {
@@ -24,7 +24,7 @@ void ServerConnection::StartConnection()
   serverAddress.ParseString("0.0.0.0:27020");
 
   SteamNetworkingConfigValue_t opt;
-  opt.SetPtr(k_ESteamNetworkingConfig_Callback_ConnectionStatusChanged, (void *)OnConnectionStatusChangedStatic);
+  opt.SetPtr(k_ESteamNetworkingConfig_Callback_ConnectionStatusChanged, (void*)OnConnectionStatusChangedStatic);
 
   mListenSocket = mNetSockets->CreateListenSocketIP(serverAddress, 1, &opt);
   if (mListenSocket == k_HSteamListenSocket_Invalid)
@@ -37,7 +37,7 @@ void ServerConnection::StartConnection()
   }
 }
 
-void ServerConnection::OnSteamNetConnectionStatusChanged(SteamNetConnectionStatusChangedCallback_t *pInfo)
+void ServerConnection::OnSteamNetConnectionStatusChanged(SteamNetConnectionStatusChangedCallback_t* pInfo)
 {
   Logger::Info("NetStatusChanged");
 
@@ -61,14 +61,14 @@ bool ServerConnection::Loop()
 {
   mNetSockets->RunCallbacks();
 
-  for (auto &[conn, sockets] : mConnections)
+  for (auto& [conn, sockets] : mConnections)
   {
-    SteamNetworkingMessage_t *pIncommingMsg = nullptr;
+    SteamNetworkingMessage_t* pIncommingMsg = nullptr;
     int numMsgs = sockets->ReceiveMessagesOnConnection(conn, &pIncommingMsg, 1);
     if (numMsgs > 0 && pIncommingMsg)
     {
-      std::string message((char *)pIncommingMsg->m_pData, pIncommingMsg->m_cbSize);
-      Logger::Info("Receive message {}", std::string((char *)pIncommingMsg->m_pData, pIncommingMsg->m_cbSize));
+      std::string message((char*)pIncommingMsg->m_pData, pIncommingMsg->m_cbSize);
+      Logger::Info("Receive message {}", std::string((char*)pIncommingMsg->m_pData, pIncommingMsg->m_cbSize));
       pIncommingMsg->Release();
       if (message == "Exit" || message == "exit")
       {
@@ -84,7 +84,7 @@ void ServerConnection::Kill()
   GameNetworkingSockets_Kill();
 }
 
-void ServerConnection::OnConnectionStatusChangedStatic(SteamNetConnectionStatusChangedCallback_t *pInfo)
+void ServerConnection::OnConnectionStatusChangedStatic(SteamNetConnectionStatusChangedCallback_t* pInfo)
 {
   sCallbackInstance->OnSteamNetConnectionStatusChanged(pInfo);
 }

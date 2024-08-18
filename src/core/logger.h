@@ -8,10 +8,10 @@
 
 namespace tk::Logger
 {
-template <typename... Args> inline void Error(const std::format_string<Args...> fmt, Args &&...args);
+template <typename... Args> inline void Error(const std::format_string<Args...> fmt, Args&&... args);
 }
 
-inline std::string className(const std::string &prettyFunction, const std::string &func)
+inline std::string className(const std::string& prettyFunction, const std::string& func)
 {
   size_t begin = prettyFunction.find("tk::") + 4;
   if (begin == std::string::npos)
@@ -104,7 +104,7 @@ public:
   Mod(Code pCode) : code(pCode)
   {
   }
-  friend std::ostream &operator<<(std::ostream &os, const Mod &mod)
+  friend std::ostream& operator<<(std::ostream& os, const Mod& mod)
   {
     return os << "\033[" << mod.code << "m";
   }
@@ -112,24 +112,24 @@ public:
 
 } // namespace Color
 
-template <typename... Args> inline void Message(const std::format_string<Args...> fmt, Args &&...args)
+template <typename... Args> inline void Message(const std::format_string<Args...> fmt, Args&&... args)
 {
   std::cout << "\t- " << std::vformat(fmt.get(), std::make_format_args(args...)) << std::endl;
 }
 
-template <typename... Args> inline void Info(const std::format_string<Args...> fmt, Args &&...args)
+template <typename... Args> inline void Info(const std::format_string<Args...> fmt, Args&&... args)
 {
   std::cout << Color::Mod::Green() << "[INFO]: " << Color::Mod::Default()
             << std::vformat(fmt.get(), std::make_format_args(args...)) << std::endl;
 }
 
-template <typename... Args> inline void Warning(const std::format_string<Args...> fmt, Args &&...args)
+template <typename... Args> inline void Warning(const std::format_string<Args...> fmt, Args&&... args)
 {
   std::cout << Color::Mod::Yellow() << "[WARNING]: " << Color::Mod::Default()
             << std::vformat(fmt.get(), std::make_format_args(args...)) << std::endl;
 }
 
-template <typename... Args> inline void Error(const std::format_string<Args...> fmt, Args &&...args)
+template <typename... Args> inline void Error(const std::format_string<Args...> fmt, Args&&... args)
 {
   std::cout << Color::Mod::Red() << "[ERROR]: " << Color::Mod::Default()
             << std::vformat(fmt.get(), std::make_format_args(args...)) << std::endl;
@@ -137,7 +137,7 @@ template <typename... Args> inline void Error(const std::format_string<Args...> 
 
 #define CHECK_IN(...) Logger::Display(__CLASS_NAME__, __FUNCTION__)
 
-inline void Display(const std::string &c, const std::string &m)
+inline void Display(const std::string& c, const std::string& m)
 {
   std::cout << Color::Mod::Cyan() << "[DISPLAY]: " << Color::Mod::Default() << c << "::" << m << std::endl;
 }

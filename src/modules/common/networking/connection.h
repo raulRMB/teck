@@ -6,9 +6,8 @@ namespace tk::net
 
 class Connection
 {
-  
 };
 
-}
+} // namespace tk::net
 
-#endif //TECK_NET_CONNECTION_H
+#endif // TECK_NET_CONNECTION_H
