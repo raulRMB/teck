@@ -1,0 +1,16 @@
+find_package(Vulkan REQUIRED)
+find_package(glfw3 REQUIRED)
+
+set(SOURCES
+    imgui.cpp
+    imgui_draw.cpp
+    imgui_widgets.cpp
+    backends/imgui_impl_vulkan.cpp
+    backends/imgui_impl_glfw.cpp
+    imgui_tables.cpp
+)
+
+add_library(imgui STATIC ${SOURCES})
+
+target_include_directories(imgui PRIVATE Vulkan::Vulkan ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(imgui PRIVATE Vulkan::Vulkan glfw)
